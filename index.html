@@ -1,0 +1,1527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Use correct character set. -->
+    <meta charset="utf-8">
+    <!-- Tell IE to use the latest, best version (or Chrome Frame if pre-IE11). -->
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <!-- Make the application on mobile take up the full browser screen and disable user scaling. -->
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+
+    <link rel="stylesheet" href="CesiumViewer.css" media="screen">
+    <link rel="stylesheet" href="css/fusionmenu.css" type="text/css">
+    <link rel="stylesheet" href="css/grid-responsive.css" type="text/css">
+    <link rel="stylesheet" href="css/master-a62609d6eda5d94f80052d33c64ee640.css" type="text/css">
+    <link rel="stylesheet" href="css/mediaqueries.css" type="text/css">
+    <link rel="stylesheet" href="css/rt_graffito-custom.css" type="text/css">
+    <link rel="stylesheet" href="css/dialog.css" type="text/css">
+    <link rel="stylesheet" href="css/datepicker.css" type="text/css">
+    <link rel="stylesheet" href="chartnew/Chart.css" type="text/css">
+    <link rel="stylesheet" href="calendar/jquery.bxslider.css" />
+
+    <title>SUNSHINE Web Portal</title>
+
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+
+    <script src="chartnew/ChartNew.js"></script>
+
+    <script src="scripts/Scenario1.js"></script>
+    <script src="scripts/Scenario2.js"></script>
+    <script src="scripts/Scenario3.js"></script>
+    <script src="jquery/jquery-1.9.1.js"></script>
+    <script src="jquery/jquery-ui.js"></script>
+    <script src="calendar/jquery.bxslider.min.js"></script>
+
+    <script data-main="CesiumViewerStartup" src="./ThirdParty/requirejs-2.1.9/require.js"></script>
+
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-64924730-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+</head>
+<body>
+<div id="browserNotSupported" class="fullScreenGraphHidden" >
+    <div style="position: absolute;top:350px;left:50%;margin-left: -175px; text-align: center"><h3 style="color: white">This browser is not supported</h3>
+    <img src="img/chrome.png" style="width: 50px; height: 50px;padding-right: 10px"><img src="img/firefox.png" style="width: 50px; height: 50px;padding-right: 10px"><img src="img/explorer.png" style="width: 50px; height: 50px;"></div>
+</div>
+<div id="fullScreenLoader" class="fullScreenGraphHidden" >
+    <div class="loadingIndicator"></div>
+</div>
+
+<div id="fullScreenKMLGraph" class="fullScreenGraphHidden" >
+    <div class="analysis">
+        <div style="padding-bottom: 30px"><img src="img/cross.png" style="width: 25px; cursor: pointer;float: right" id="buildinganalysis-close"/> </div>
+
+        <div class="component-content" style="padding-bottom: 25px">
+        <h2 style="color: white">Building Analysis and Simulation Tool</h2>
+        </div>
+
+        <div class="component-content">
+            <div style="float:left;width: 40%">
+                    <div class = "analysisLabel" id="buildingAnalysis-label">
+                       <div id="buildinganalysis-consumpion" style="padding-top: 100px; padding-bottom: 75px; font-size: 150px; color: white"></div>
+                       <div style="font-size: 50px; color: white ">EPGL kWh/m2</div>
+                    </div>
+                    <div class = "analysisLabelCO2" id="buildingAnalysis-label3">
+                        <div id="buildinganalysis-consuption2" style="padding-top: 80px; padding-bottom: 55px; font-size: 100px; color: white"></div>
+                        <div id="buildinganalysis-consuption2-label" style="font-size: 30px; color: white ">EPI kWh/m2</div>
+                    </div>
+                    <div class = "analysisLabelCO2" id="buildingAnalysis-label2">
+                        <div id="buildinganalysis-emission" style="padding-top: 80px; padding-bottom: 55px; font-size: 100px; color: white"></div>
+                        <div style="font-size: 30px; color: white ">Kg CO2 m2/Year</div>
+                </div>
+            </div>
+
+            <div class="analysisSummary">
+                <div><strong>UUID: </strong><span id="buildinganalysis-id"></span></div>
+                <div><strong>Construction Year: </strong><span id="buildinganalysis-year"></span></div>
+                <div><strong><span id="buildinganalysis-epi-label"></span>: </strong><span id="buildinganalysis-epi"></span></div>
+                <div><strong>EPGL: </strong><span id="buildinganalysis-epgl"></span></div>
+                <div><strong>CO2: </strong><span id="buildinganalysis-co2"></span></div>
+                <div><strong>Floors: </strong><span id="buildinganalysis-floors"></span></div>
+                <div><strong>Average Floor Height: </strong><span id="buildinganalysis-ave-floor"></span></div>
+                <div><strong>Perimeter: </strong><span id="buildinganalysis-perimeter"></span></div>
+                <div><strong>Height: </strong><span id="buildinganalysis-height"></span></div>
+                <div><strong>Area: </strong><span id="buildinganalysis-area"></span></div>
+                <div><strong>Volume: </strong><span id="buildinganalysis-volume"></span></div>
+                <div><strong>Typology: </strong><span id="buildinganalysis-typology"></span></div>
+                <div><strong>Refurbishment Level: </strong><span id="buildinganalysis-refurbishment"></span></div>
+
+                <div id="buildinganalysis-simulationcontainer">
+                    <div class="component-content" style="padding-bottom: 25px">
+                        <h2 style="color: white; padding-top: 50px; font-size: 20px">Optimize your Building Configuration</h2>
+                        <p>Using the simulation tool, providing more accurate building information, it is possible to refine the results estimated by the SUNSHINE building pre-certification system.</p>
+                    </div>
+                    <table class="analysisTable" style="width: 50%">
+                        <tr><td>Construction Year</td><td><select id="buildinganalysis-newyear" class="analysisSelect"></select></td></tr>
+                        <tr><td>Building Typology</td><td><select id="buildinganalysis-newtypology" class="analysisSelect"></select></td></tr>
+                        <tr><td>Refurbishment Level</td><td><select id="buildinganalysis-newrefurbishment" class="analysisSelect"></select></td></tr>
+                        <tr><td>Apartment Position</td><td><select id="buildinganalysis-newposition" class="analysisSelect"></select></td></tr>
+                    </table>
+                    <br/><br/>
+                    <table class="analysisTable" style="margin-left:0px;margin-right:0px;width: 50%">
+
+                        <th><a href="#" id="buildinganalysis-editdata">Edit</a></th>
+                        <tr><td>Start Day</td><td><input type="text" id="buildinganalysis-heating_start"></td></tr>
+                        <tr><td>End Day</td><td><input type="text" id="buildinganalysis-heating_end"></td></tr>
+                        <tr><td>Average Temperature</td><td><input type="text" id="buildinganalysis-avg_temp"></td></tr>
+                        <tr><td>Comfort Temperature</td><td><input type="text" id="buildinganalysis-avg_comfort"></td></tr>
+                        <tr><td>U Roof</td><td><input type="text" id="buildinganalysis-u_roof"></td></tr>
+                        <tr><td>U Wall</td><td><input type="text" id="buildinganalysis-u_wall"></td></tr>
+                        <tr><td>U Floor</td><td><input type="text" id="buildinganalysis-u_floor"></td></tr>
+                        <tr><td>U Windows</td><td><input type="text" id="buildinganalysis-u_window"></td></tr>
+                        <tr><td>Percentage of Windowed Surface</td><td><input type="text" id="buildinganalysis-p_window"></td></tr>
+                        <tr>
+                            <td><input type="button" id="buildinganalysis-simulate" class="button" value="Simulate Building Consumpion" style=" margin-left: 0px;margin-top: 50px"></td>
+                            <td><input type="button" id="buildinganalysis-restoredefaults"  class="button" value="Restore Defaults" style=" margin-left: 0px;margin-top: 50px"></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <br/>
+
+            <div class="item-separator"></div>
+
+
+        </div>
+    </div>
+</div>
+<div id="fullScreenBUILDINGGraph" class="fullScreenGraphHidden" >
+    <div class="analysis">
+        <div style="padding-bottom: 30px"><img src="img/cross.png" style="width: 25px; cursor: pointer;float: right" id="building-close"/> </div>
+
+        <div class="component-content" style="padding-bottom: 10px">
+            <h2 style="color: white">Building Analysis  <span id="building-usrid"/></h2>
+        </div>
+
+        <div id="building-timeline-container-analysis"></div>
+
+        <div class="component-content">
+                    <div class="rt-image" id="building-chart-fullscreen-temp-container" style="width: 1180px;height: 260px; border: #e3d84b 1px solid;border-radius:5px;margin-left: 10px; background-color: white;margin-bottom: 20px;">
+                        <canvas id="building-chart-fullscreen-temp" height="260" width="1180" ></canvas>
+                    </div>
+
+                    <div class="rt-image" id="building-chart-fullscreen_1h-container" style="width: 1180px;height: 260px; border: #e3d84b 1px solid;border-radius:5px;margin-left: 10px; background-color: white;margin-bottom: 20px">
+                        <canvas id="building-chart-fullscreen_1h" height="260" width="1180" ></canvas>
+                    </div>
+
+                    <div class="rt-image" id="building-chart-fullscreen_1d-container" style="width: 1180px;height: 260px; border: #e3d84b 1px solid;border-radius:5px;margin-left: 10px; background-color: white;margin-bottom: 20px">
+                        <canvas id="building-chart-fullscreen_1d" height="260" width="1180" ></canvas>
+                    </div>
+
+                    <div class="rt-image" id="additional-building-chart-fullscreen_1h-container" style="width: 1180px;height: 260px; border: #e3d84b 1px solid;border-radius:5px;margin-left: 10px; background-color: white;margin-bottom: 20px">
+                        <canvas id="additional-building-chart-fullscreen_1h" height="260" width="1180" ></canvas>
+                    </div>
+
+                    <div class="rt-image" id="additional-building-chart-fullscreen_1d-container" style="width: 1180px;height: 260px; border: #e3d84b 1px solid;border-radius:5px;margin-left: 10px; background-color: white;margin-bottom: 20px">
+                        <canvas id="additional-building-chart-fullscreen_1d" height="260" width="1180" ></canvas>
+                    </div>
+            <br/>
+
+            <div class="item-separator"></div>
+        </div>
+
+        <div class="component-content" id="building-prediction-container" style="padding-bottom: 25px;color:#ffffff">
+            <h2 style="color: white; font-size: 20px">Building Prediction Model</h2>
+            <p>Using SUNSHINE prediction model, you will be able to know when turn on the heating system in order to have your preferred comfort temperature minimizing the costs to reach it.</p>
+
+            <div id="building-prediction-timeline-container-analysis"></div>
+
+            <table class="analysisTable">
+                <tr>
+                    <td>
+                        <div class="rt-image" id="building-chart-prediction-container" style="width: 900px;height: 200px; border: #e3d84b 1px solid;border-radius:5px;margin-left: 10px; background-color: white;margin-bottom: 20px">
+                            <canvas id="building-chart-prediction" height="200" width="900" style="height: inherit" ></canvas>
+                        </div>
+                    </td>
+                    <td>
+                        <div class = "analysisLabelBuilding">
+                            <div id="building-prediction-times">NO DATA</div>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+
+            <div class="component-content" style="padding-bottom: 25px;color:#ffffff;float:right">
+                <h2 style="color: white; padding-top: 25px; font-size: 20px">7 Days Active Schedulings</h2>
+                <table id="buildinganalysis-scheduling-table" class="analysisTable" style="width: 500px;text-align: center"></table>
+            </div>
+
+            <div id="building-configuration">
+                <form id="building-prediction-form">
+                    <table class="analysisTable">
+
+                        <tr>
+                            <td style="padding-right: 20px">Comfort Temperature</td>
+                            <td>
+                                <select id="building-prediction-comfort-temp">
+                                    <option value="17">17</option>
+                                    <option value="18">18</option>
+                                    <option value="19">19</option>
+                                    <option value="20">20</option>
+                                    <option value="21">21</option>
+                                    <option value="22">22</option>
+                                    <option value="23">23</option>
+                                    <option value="24">24</option>
+                                    <option value="25">25</option>
+                                    <option value="26">26</option>
+                                    <option value="27">27</option>
+                                    <option value="28">28</option>
+                                    <option value="29">29</option>
+                                    <option value="30">30</option>
+                                </select>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>Comfort Start Hour</td>
+                            <td>
+                                <select id="building-prediction-start">
+                                    <option value="0:0">00:00</option>
+                                    <option value="0:15">00:15</option>
+                                    <option value="0:30">00:30</option>
+                                    <option value="0:45">00:45</option>
+                                    <option value="1:0">1:00</option>
+                                    <option value="1:15">1:15</option>
+                                    <option value="1:30">1:30</option>
+                                    <option value="1:45">1:45</option>
+                                    <option value="2:0">2:00</option>
+                                    <option value="2:15">2:15</option>
+                                    <option value="2:30">2:30</option>
+                                    <option value="2:45">2:45</option>
+                                    <option value="3:0">3:00</option>
+                                    <option value="3:15">3:15</option>
+                                    <option value="3:30">3:30</option>
+                                    <option value="3:45">3:45</option>
+                                    <option value="4:0">4:00</option>
+                                    <option value="4:15">4:15</option>
+                                    <option value="4:30">4:30</option>
+                                    <option value="4:45">4:45</option>
+                                    <option value="5:0">5:00</option>
+                                    <option value="5:15">5:15</option>
+                                    <option value="5:30">5:30</option>
+                                    <option value="5:45">5:45</option>
+                                    <option value="6:0">6:00</option>
+                                    <option value="6:15">6:15</option>
+                                    <option value="6:30">6:30</option>
+                                    <option value="6:45">6:45</option>
+                                    <option value="7:0">7:00</option>
+                                    <option value="7:15">7:15</option>
+                                    <option value="7:30">7:30</option>
+                                    <option value="7:45">7:45</option>
+                                    <option value="8:0">8:00</option>
+                                    <option value="8:15">8:15</option>
+                                    <option value="8:30">8:30</option>
+                                    <option value="8:45">8:45</option>
+                                    <option value="9:0">9:00</option>
+                                    <option value="9:15">9:15</option>
+                                    <option value="9:30">9:30</option>
+                                    <option value="9:45">9:45</option>
+                                    <option value="10:0">10:00</option>
+                                    <option value="10:15">10:15</option>
+                                    <option value="10:30">10:30</option>
+                                    <option value="10:45">10:45</option>
+                                    <option value="11:0">11:00</option>
+                                    <option value="11:15">11:15</option>
+                                    <option value="11:30">11:30</option>
+                                    <option value="11:45">11:45</option>
+                                    <option value="12:0">12:00</option>
+                                    <option value="12:15">12:15</option>
+                                    <option value="12:30">12:30</option>
+                                    <option value="12:45">12:45</option>
+                                    <option value="13:0">13:00</option>
+                                    <option value="13:15">13:15</option>
+                                    <option value="13:30">13:30</option>
+                                    <option value="13:45">13:45</option>
+                                    <option value="14:0">14:00</option>
+                                    <option value="14:15">14:15</option>
+                                    <option value="14:30">14:30</option>
+                                    <option value="14:45">14:45</option>
+                                    <option value="15:0">15:00</option>
+                                    <option value="15:15">15:15</option>
+                                    <option value="15:30">15:30</option>
+                                    <option value="15:45">15:45</option>
+                                    <option value="16:0">16:00</option>
+                                    <option value="16:15">16:15</option>
+                                    <option value="16:30">16:30</option>
+                                    <option value="16:45">16:45</option>
+                                    <option value="17:0">17:00</option>
+                                    <option value="17:15">17:15</option>
+                                    <option value="17:30">17:30</option>
+                                    <option value="17:45">17:45</option>
+                                    <option value="18:0">18:00</option>
+                                    <option value="18:15">18:15</option>
+                                    <option value="18:30">18:30</option>
+                                    <option value="18:45">18:45</option>
+                                    <option value="19:0">19:00</option>
+                                    <option value="19:15">19:15</option>
+                                    <option value="19:30">19:30</option>
+                                    <option value="19:45">19:45</option>
+                                    <option value="20:0">20:00</option>
+                                    <option value="20:15">20:15</option>
+                                    <option value="20:30">20:30</option>
+                                    <option value="20:45">20:45</option>
+                                    <option value="21:0">21:00</option>
+                                    <option value="21:15">21:15</option>
+                                    <option value="21:30">21:30</option>
+                                    <option value="21:45">21:45</option>
+                                    <option value="22:0">22:00</option>
+                                    <option value="22:15">22:15</option>
+                                    <option value="22:30">22:30</option>
+                                    <option value="23:45">22:45</option>
+                                    <option value="23:0">23:00</option>
+                                    <option value="23:15">23:15</option>
+                                    <option value="23:30">23:30</option>
+                                    <option value="23:45">23:45</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Comfort End Hour</td>
+                            <td>
+                                <select id="building-prediction-end">
+                                    <option value="0:0">00:00</option>
+                                    <option value="0:15">00:15</option>
+                                    <option value="0:30">00:30</option>
+                                    <option value="0:45">00:45</option>
+                                    <option value="1:0">1:00</option>
+                                    <option value="1:15">1:15</option>
+                                    <option value="1:30">1:30</option>
+                                    <option value="1:45">1:45</option>
+                                    <option value="2:0">2:00</option>
+                                    <option value="2:15">2:15</option>
+                                    <option value="2:30">2:30</option>
+                                    <option value="2:45">2:45</option>
+                                    <option value="3:0">3:00</option>
+                                    <option value="3:15">3:15</option>
+                                    <option value="3:30">3:30</option>
+                                    <option value="3:45">3:45</option>
+                                    <option value="4:0">4:00</option>
+                                    <option value="4:15">4:15</option>
+                                    <option value="4:30">4:30</option>
+                                    <option value="4:45">4:45</option>
+                                    <option value="5:0">5:00</option>
+                                    <option value="5:15">5:15</option>
+                                    <option value="5:30">5:30</option>
+                                    <option value="5:45">5:45</option>
+                                    <option value="6:0">6:00</option>
+                                    <option value="6:15">6:15</option>
+                                    <option value="6:30">6:30</option>
+                                    <option value="6:45">6:45</option>
+                                    <option value="7:0">7:00</option>
+                                    <option value="7:15">7:15</option>
+                                    <option value="7:30">7:30</option>
+                                    <option value="7:45">7:45</option>
+                                    <option value="8:0">8:00</option>
+                                    <option value="8:15">8:15</option>
+                                    <option value="8:30">8:30</option>
+                                    <option value="8:45">8:45</option>
+                                    <option value="9:0">9:00</option>
+                                    <option value="9:15">9:15</option>
+                                    <option value="9:30">9:30</option>
+                                    <option value="9:45">9:45</option>
+                                    <option value="10:0">10:00</option>
+                                    <option value="10:15">10:15</option>
+                                    <option value="10:30">10:30</option>
+                                    <option value="10:45">10:45</option>
+                                    <option value="11:0">11:00</option>
+                                    <option value="11:15">11:15</option>
+                                    <option value="11:30">11:30</option>
+                                    <option value="11:45">11:45</option>
+                                    <option value="12:0">12:00</option>
+                                    <option value="12:15">12:15</option>
+                                    <option value="12:30">12:30</option>
+                                    <option value="12:45">12:45</option>
+                                    <option value="13:0">13:00</option>
+                                    <option value="13:15">13:15</option>
+                                    <option value="13:30">13:30</option>
+                                    <option value="13:45">13:45</option>
+                                    <option value="14:0">14:00</option>
+                                    <option value="14:15">14:15</option>
+                                    <option value="14:30">14:30</option>
+                                    <option value="14:45">14:45</option>
+                                    <option value="15:0">15:00</option>
+                                    <option value="15:15">15:15</option>
+                                    <option value="15:30">15:30</option>
+                                    <option value="15:45">15:45</option>
+                                    <option value="16:0">16:00</option>
+                                    <option value="16:15">16:15</option>
+                                    <option value="16:30">16:30</option>
+                                    <option value="16:45">16:45</option>
+                                    <option value="17:0">17:00</option>
+                                    <option value="17:15">17:15</option>
+                                    <option value="17:30">17:30</option>
+                                    <option value="17:45">17:45</option>
+                                    <option value="18:0">18:00</option>
+                                    <option value="18:15">18:15</option>
+                                    <option value="18:30">18:30</option>
+                                    <option value="18:45">18:45</option>
+                                    <option value="19:0">19:00</option>
+                                    <option value="19:15">19:15</option>
+                                    <option value="19:30">19:30</option>
+                                    <option value="19:45">19:45</option>
+                                    <option value="20:0">20:00</option>
+                                    <option value="20:15">20:15</option>
+                                    <option value="20:30">20:30</option>
+                                    <option value="20:45">20:45</option>
+                                    <option value="21:0">21:00</option>
+                                    <option value="21:15">21:15</option>
+                                    <option value="21:30">21:30</option>
+                                    <option value="21:45">21:45</option>
+                                    <option value="22:0">22:00</option>
+                                    <option value="22:15">22:15</option>
+                                    <option value="22:30">22:30</option>
+                                    <option value="23:45">22:45</option>
+                                    <option value="23:0">23:00</option>
+                                    <option value="23:15">23:15</option>
+                                    <option value="23:30">23:30</option>
+                                    <option value="23:45">23:45</option>
+                                </select>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td style="padding-top: 40px">From</td>
+                            <td style="padding-top: 40px">
+                                <input type="text" id="building-prediction-start-day" style="width: 91px; margin-right: 10px"/>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>To</td>
+                            <td>
+                                <input type="text"  id="building-prediction-end-day" style="width: 91px; margin-right: 10px"/>
+                            </td>
+                        </tr>
+                        <tr style="text-align: center">
+                            <td colspan="2"><input type="button" id="building-predict" class="button" value="Set the Prediction Model" style="margin-top: 20px"></td>
+                        </tr>
+                    </table>
+                </form>
+            </div>
+
+        </div>
+
+
+    </div>
+</div>
+<div id="fullScreenSHELTERGraph" class="fullScreenGraphHidden" >
+    <div class="analysis">
+        <div style="padding-bottom: 30px"><img src="img/cross.png" style="width: 25px; cursor: pointer;float: right" id="shelter-close"/> </div>
+
+        <div class="component-content" style="padding-bottom: 10px">
+            <h2 style="color: white">Shelter Analysis  <span id="shelter-usrid"/></h2>
+        </div>
+
+        <div id="shelter-timeline-container-analysis"></div>
+
+        <div class="component-content">
+                    <div class="rt-image" id="shelter-chart-fullscreen_curve-container" style="width: 1180px;height: 260px; border: #e3d84b 1px solid;border-radius:5px;margin-left: 10px; background-color: white;margin-bottom: 20px">
+                        <canvas id="shelter-chart-fullscreen_curve" height="260" width="1180" ></canvas>
+                    </div>
+
+                    <div class="rt-image" id="shelter-chart-fullscreen_10-container" style="width: 1180px;height: 260px; border: #e3d84b 1px solid;border-radius:5px;margin-left: 10px; background-color: white;margin-bottom: 20px">
+                        <canvas id="shelter-chart-fullscreen_10" height="260" width="1180" ></canvas>
+                    </div>
+
+                    <div class="rt-image" id="shelter-chart-fullscreen_1h-container" style="width: 1180px;height: 260px; border: #e3d84b 1px solid;border-radius:5px;margin-left: 10px; background-color: white;margin-bottom: 20px">
+                        <canvas id="shelter-chart-fullscreen_1h" height="260" width="1180" ></canvas>
+                    </div>
+
+                    <div class="rt-image" id="shelter-chart-fullscreen_1d-container" style="width: 1180px;height: 260px; border: #e3d84b 1px solid;border-radius:5px;margin-left: 10px; background-color: white;margin-bottom: 20px">
+                        <canvas id="shelter-chart-fullscreen_1d" height="260" width="1180" ></canvas>
+                    </div>
+            <br/>
+
+            <div class="item-separator"></div>
+        </div>
+
+        <div class="component-content" id="shelter-prediction-container" style="padding-bottom: 25px;color:#ffffff">
+            <h2 style="color: white; font-size: 20px">Shelter Prediction Model</h2>
+            <p>Using SUNSHINE prediction model, you will be able to know the thermal behavior of the selected Shelter based on predicted consumpion and weather forecast.</p>
+
+            <div id="shelter-prediction-timeline-container-analysis"></div>
+
+            <table class="analysisTable">
+                <tr>
+                    <td>
+                        <div class="rt-image" id="shelter-chart-prediction-container" style="width: 900px;height: 200px; border: #e3d84b 1px solid;border-radius:5px;margin-left: 10px; background-color: white;margin-bottom: 20px">
+                            <canvas id="shelter-chart-prediction" height="200" width="900" style="height: inherit"></canvas>
+                        </div>
+                    </td>
+                    <td>
+                        <div class = "analysisLabelShelter">
+                            <div id="shelter-prediction-cooling" style="padding-top: 40px; padding-bottom: 30px; font-size: 100px; color: white">4</div>
+                            <div style="font-size: 15px; color: white ">Cooling Start</div>
+                        </div>
+
+                        <div class = "analysisLabelShelter">
+                            <div id="shelter-prediction-heating" style="padding-top: 40px; padding-bottom: 30px; font-size: 100px; color: white">4</div>
+                            <div style="font-size: 15px; color: white ">Heating Start</div>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+
+            <div class="component-content" style="padding-bottom: 25px;color:#ffffff;float:right">
+                <h2 style="color: white; padding-top: 25px; font-size: 20px">Monthly Configurations</h2>
+                <table id="shelteranalysis-scheduling-table" class="analysisTable" style="width: 500px;text-align: center"></table>
+            </div>
+
+            <div id="shelter-configuration">
+                <form id="shelter-prediction-form">
+                    <table class="analysisTable" style="text-align: center">
+                        <tr>
+                            <td colspan="2">
+                                <select id="shelter-control-repeat-year" style="width: 100px; margin-right: 20px"></select>
+
+                                <input id="shelter-control-repeat-jan" type="button" class="calendarbutton" value="Jan" style="margin-bottom: 15px;">
+                                <input id="shelter-control-repeat-feb" type="button" class="calendarbutton" value="Feb" style="margin-bottom: 15px;">
+                                <input id="shelter-control-repeat-mar" type="button" class="calendarbutton" value="Mar" style="margin-bottom: 15px;">
+                                <input id="shelter-control-repeat-apr" type="button" class="calendarbutton" value="Apr" style="margin-bottom: 15px;">
+                                <input id="shelter-control-repeat-may" type="button" class="calendarbutton" value="May" style="margin-bottom: 15px;">
+                                <input id="shelter-control-repeat-jun" type="button" class="calendarbutton" value="Jun" style="margin-bottom: 15px;">
+                                <input id="shelter-control-repeat-jul" type="button" class="calendarbutton" value="Jul" style="margin-bottom: 15px;">
+                                <input id="shelter-control-repeat-aug" type="button" class="calendarbutton" value="Aug" style="margin-bottom: 15px;">
+                                <input id="shelter-control-repeat-sep" type="button" class="calendarbutton" value="Sep" style="margin-bottom: 15px;">
+                                <input id="shelter-control-repeat-oct" type="button" class="calendarbutton" value="Oct" style="margin-bottom: 15px;">
+                                <input id="shelter-control-repeat-nov" type="button" class="calendarbutton" value="Nov" style="margin-bottom: 15px;">
+                                <input id="shelter-control-repeat-dec" type="button" class="calendarbutton" value="Dec" style="margin-bottom: 15px;">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Max Heating Times</td>
+                            <td>
+                                <select id="shelter-prediction-heating-times">
+                                    <option value="0">0</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                    <option value="6">6</option>
+                                    <option value="7">7</option>
+                                    <option value="8">8</option>
+                                    <option value="9">9</option>
+                                    <option value="10">10</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Max Cooling Times</td>
+                            <td>
+                                <select id="shelter-prediction-cooling-times">
+                                    <option value="0">0</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                    <option value="6">6</option>
+                                    <option value="7">7</option>
+                                    <option value="8">8</option>
+                                    <option value="9">9</option>
+                                    <option value="10">10</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2"><input type="button" id="shelter-predict" class="button" value="Set the Prediction Model" style="margin-top: 20px"></td>
+                        </tr>
+                    </table>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+<div id="fullScreenWEATHERGraph" class="fullScreenGraphHidden" >
+    <div class="analysis">
+        <div style="padding-bottom: 30px"><img src="img/cross.png" style="width: 25px; cursor: pointer;float: right" id="weather-close"/> </div>
+
+        <div class="component-content" style="padding-bottom: 10px">
+            <h2 style="color: white">Weather Station Analysis  <span id="weather-usrid"/></h2>
+        </div>
+
+        <div id="weather-timeline-container-analysis"></div>
+
+        <div class="component-content">
+                    <div class="rt-image" id="weather-chart-fullscreen-container" style="width: 1180px;height: 260px; border: #e3d84b 1px solid;border-radius:5px;margin-left: 10px; background-color: white;margin-bottom: 20px">
+                        <canvas id="weather-chart-fullscreen" height="260" width="1180" ></canvas>
+                    </div>
+
+                    <div class="component-content" style="padding-bottom: 25px;color:#ffffff">
+                        <h2 style="color: white; padding-top: 50px; font-size: 20px">3 Days Weather Forecast</h2>
+                    </div>
+
+                    <div class="rt-image" id="weather-forecast-chart-fullscreen-container" style="width: 1180px;height: 260px; border: #e3d84b 1px solid;border-radius:5px;margin-left: 10px; background-color: white;margin-bottom: 20px">
+                        <canvas id="weather-forecast-chart-fullscreen" height="260" width="1180" ></canvas>
+                    </div>
+            <br/>
+
+            <div class="item-separator"></div>
+        </div>
+    </div>
+</div>
+<div id="fullScreenNETWORKGraph" class="fullScreenGraphHidden" >
+    <div class="analysis">
+        <div style="padding-bottom: 30px"><img src="img/cross.png" style="width: 25px; cursor: pointer;float: right" id="networkanalysis-close"/> </div>
+
+        <div class="component-content" style="padding-bottom: 10px">
+            <h2 style="color: white">Network Analysis <span id="network-usrid"/></h2>
+        </div>
+
+        <div id="network-timeline-container-analysis"></div>
+
+        <div class="component-content">
+                    <div class="rt-image" id="network-chart-fullscreen_15-container" style="width: 1180px;height: 260px; border: #e3d84b 1px solid;border-radius:5px;margin-left: 10px; background-color: white;margin-bottom: 20px">
+                            <canvas id="network-chart-fullscreen_15" height="260" width="1180" ></canvas>
+                    </div>
+                    <div class="rt-image" id="network-chart-fullscreen_1h-container" style="width: 1180px;height: 260px; border: #e3d84b 1px solid;border-radius:5px;margin-left: 10px; background-color: white;margin-bottom: 20px">
+                            <canvas id="network-chart-fullscreen_1h" height="260" width="1180" ></canvas>
+
+                    </div>
+                    <div class="rt-image" id="network-chart-fullscreen_1d-container" style="width: 1180px;height: 260px; border: #e3d84b 1px solid;border-radius:5px;margin-left: 10px; background-color: white;margin-bottom: 20px">
+                            <canvas id="network-chart-fullscreen_1d" height="260" width="1180" ></canvas>
+                    </div>
+            <br/>
+
+            <div class="item-separator"></div>
+        </div>
+
+        <div id="networkanalysis-additionalinfo" class="component-content" style="color:#ffffff">
+            <h2 style="color: white; font-size: 20px">Additional Information</h2>
+
+            <table class="analysisTable" style="width:400px">
+                <tr>
+                    <td>Sunrise HMS</td>
+                    <td style="text-align: right"><span id="networkanalysis-sunrise"/></td>
+                </tr>
+
+                <tr>
+                    <td>Sunshine HMS</td>
+                    <td style="text-align: right"><span id="networkanalysis-sunshine"/></td>
+                </tr>
+
+                <tr>
+                    <td>Life HRS</td>
+                    <td style="text-align: right"><span id="networkanalysis-life"/></td>
+                </tr>
+                <tr>
+                    <td>N-ALL NUM</td>
+                    <td style="text-align: right"><span id="networkanalysis-nall"/></td>
+                </tr>
+                <tr>
+                    <td>N-OK NUM</td>
+                    <td style="text-align: right"><span id="networkanalysis-nok"/></td>
+                </tr>
+                <tr>
+                    <td>CU STATUS</td>
+                    <td style="text-align: right"><span id="networkanalysis-onof"/></td>
+                </tr>
+            </table>
+        </div>
+
+        <div id="networkanalysis-configuration">
+            <div class="component-content" style="padding-bottom: 25px;color:#ffffff">
+                <h2 style="color: white; padding-top: 50px; font-size: 20px">Currently Active Schedulings</h2>
+                <table id="networkanalysis-scheduling-table" class="analysisTable" style="width: 800px;"></table>
+            </div>
+
+            <div class="component-content" style="padding-bottom: 25px;color:#ffffff">
+                <h2 style="color: white; padding-top: 50px; font-size: 20px">Lighting Network Configuration Tool</h2>
+                <p>Using SUNSHINE scheduler tool, you will be able to remotely control your lamps and control units.</p>
+
+                    <table class="analysisTable" style="text-align: center;width: 40%">
+
+                        <tr>
+                            <td><select id="networkanalysis-control-dimming1" style="width: 90px;"/></td>
+                            <td><select id="networkanalysis-control-dimming2" style="width: 90px;"/></td>
+                            <td><select id="networkanalysis-control-dimming3" style="width: 90px;"/></td>
+                            <td><select id="networkanalysis-control-dimming4" style="width: 90px;"/></td>
+                        </tr>
+
+                       <tr>
+                           <td>Start<input type="hidden" id="networkanalysis-control-from1" value="12:00"></td>
+                           <td><select id="networkanalysis-control-from2" style="width: 90px;"></select></td>
+                           <td><select id="networkanalysis-control-from3" style="width: 90px;"></select></td>
+                           <td><select id="networkanalysis-control-from4" style="width: 90px;"></select></td>
+                        </tr>
+                    </table>
+
+                    <table class="analysisTable" style="text-align: center;width: 40%">
+                        <tr>
+                            <td>From <input type="text" id="networkanalysis-control-start-day" style="width: 80px;margin-left: 10px"/></td>
+                            <td>To <input type="text"  id="networkanalysis-control-end-day" style="width: 80px;margin-left: 10px"/></select></td>
+                            <td>Priority
+                                <select id="networkanalysis-control-priority" style="width: 100px;margin-left: 10px"/>
+                                <option value="1" selected>DEFAULT</option>
+                                <option value="2">LOWEST</option>
+                                <option value="3">LOW</option>
+                                <option value="4">HIGH</option>
+                                </select>
+                            </td>
+                        </tr>
+                    </table>
+
+                    <table class="analysisTable" style="text-align: center;width: 30%">
+                        <tr>
+                            <td>
+                                <input id="networkanalysis-control-repeat-mon" type="button" class="calendarbutton" value="Mon">
+                                <input id="networkanalysis-control-repeat-tue" type="button" class="calendarbutton" value="Tue">
+                                <input id="networkanalysis-control-repeat-wed" type="button" class="calendarbutton" value="Wed">
+                                <input id="networkanalysis-control-repeat-thu" type="button" class="calendarbutton" value="Thu">
+                                <input id="networkanalysis-control-repeat-fri" type="button" class="calendarbutton" value="Fri">
+                                <input id="networkanalysis-control-repeat-sat" type="button" class="calendarbutton" value="Sat">
+                                <input id="networkanalysis-control-repeat-sun" type="button" class="calendarbutton" value="Sun" style="margin-right: 15px">
+
+                                <input type="button" id="networkanalysis-repeat" class="button" value="Schedule">
+                            </td>
+                        </tr>
+                    </table>
+            </div>
+        </div>
+
+    </div>
+</div>
+<div id="fullScreenLAMPGraph" class="fullScreenGraphHidden" >
+
+    <div class="analysis">
+        <div style="padding-bottom: 30px"><img src="img/cross.png" style="width: 25px; cursor: pointer;float: right" id="lampanalysis-close"/> </div>
+
+        <div class="component-content" style="padding-bottom: 10px">
+            <h2 style="color: white">Lamp Analysis <span id="lamp-usrid"/></h2>
+        </div>
+
+        <div id="lamp-timeline-container-analysis"></div>
+
+        <div class="component-content">
+                    <div class="rt-image" id="lamp-chart-fullscreen-container" style="width: 1180px;height: 360px; border: #e3d84b 1px solid;border-radius:5px;margin-left: 10px; background-color: white;margin-bottom: 20px">
+                        <canvas id="lamp-chart-fullscreen" height="360" width="1180" ></canvas>
+                    </div>
+            <br/>
+
+            <div class="item-separator"></div>
+        </div>
+
+            <div id="lampanalysis-additionalinfo" class="component-content" style="color:#ffffff">
+                <h2 style="color: white; font-size: 20px">Additional Information</h2>
+
+                <table class="analysisTable" style="width:400px">
+                    <tr>
+                        <td>STATUS</td>
+                        <td style="text-align: right"><span id="lampanalysis-status"/></td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="component-content" style="padding-bottom: 25px;color:#ffffff">
+                <h2 style="color: white; padding-top: 50px; font-size: 20px">Currently Active Schedulings</h2>
+                <table id="lampanalysis-scheduling-table" class="analysisTable" style="width: 800px;"></table>
+            </div>
+
+            <div id="lampanalysis-configuration" class="component-content" style="padding-bottom: 25px;color:#ffffff">
+                <h2 style="color: white; padding-top: 50px; font-size: 20px">Lamp Configuration Tool</h2>
+                <p>Using SUNSHINE scheduler tool, you will be able to remotely control your lamps and control units.</p>
+
+                <table class="analysisTable" style="text-align: center;width: 40%">
+
+                    <tr>
+                        <td style="padding-right: 30px">Control ID</td>
+                        <td>
+                            <select id="lampanalysis-ctrlid" style="margin-right: 10px;width: 100px"></select>
+                            <input type="button" id="lampanalysis-swap" class="button" value="Update">
+                        </td>
+                    </tr>
+                </table>
+
+                <table class="analysisTable" style="text-align: center;width: 40%">
+
+                    <tr>
+                        <td><select id="lampanalysis-control-dimming1" style="width: 90px;"/></td>
+                        <td><select id="lampanalysis-control-dimming2" style="width: 90px;"/></td>
+                        <td><select id="lampanalysis-control-dimming3" style="width: 90px;"/></td>
+                        <td><select id="lampanalysis-control-dimming4" style="width: 90px;"/></td>
+                    </tr>
+
+                    <tr>
+                        <td>Start<input type="hidden" id="lampanalysis-control-from1" value="12:00"></td>
+                        <td><select id="lampanalysis-control-from2" style="width: 90px;"></select></td>
+                        <td><select id="lampanalysis-control-from3" style="width: 90px;"></select></td>
+                        <td><select id="lampanalysis-control-from4" style="width: 90px;"></select></td>
+                    </tr>
+                </table>
+
+                <table class="analysisTable" style="text-align: center;width: 40%">
+                    <tr>
+                        <td>From <input type="text" id="lampanalysis-control-start-day" style="width: 80px;margin-left: 10px"/></td>
+                        <td>To <input type="text"  id="lampanalysis-control-end-day" style="width: 80px;margin-left: 10px"/></select></td>
+                        <td>Priority
+                            <select id="lampanalysis-control-priority" style="width: 100px;margin-left: 10px"/>
+                            <option value="1" selected>DEFAULT</option>
+                            <option value="2">LOWEST</option>
+                            <option value="3">LOW</option>
+                            <option value="4">HIGH</option>
+                            </select>
+                        </td>
+                    </tr>
+                </table>
+
+                <table class="analysisTable" style="text-align: center;width: 30%">
+                    <tr>
+                        <td>
+                            <input id="lampanalysis-control-repeat-mon" type="button" class="calendarbutton" value="Mon">
+                            <input id="lampanalysis-control-repeat-tue" type="button" class="calendarbutton" value="Tue">
+                            <input id="lampanalysis-control-repeat-wed" type="button" class="calendarbutton" value="Wed">
+                            <input id="lampanalysis-control-repeat-thu" type="button" class="calendarbutton" value="Thu">
+                            <input id="lampanalysis-control-repeat-fri" type="button" class="calendarbutton" value="Fri">
+                            <input id="lampanalysis-control-repeat-sat" type="button" class="calendarbutton" value="Sat">
+                            <input id="lampanalysis-control-repeat-sun" type="button" class="calendarbutton" value="Sun" style="margin-right: 15px">
+
+                            <input type="button" id="lampanalysis-repeat" class="button" value="Schedule">
+                        </td>
+                    </tr>
+                </table>
+            </div>
+    </div>
+</div>
+<div id="fullScreenGROUPGraph" class="fullScreenGraphHidden" >
+    <div class="analysis">
+        <div style="padding-bottom: 30px"><img src="img/cross.png" style="width: 25px; cursor: pointer;float: right;" id="groupanalysis-close"/> </div>
+
+        <div class="component-content" style="padding-bottom: 10px">
+            <h2 style="color: white">Group Manager <span id="group-usrid"/></h2>
+        </div>
+                    <div class="component-content" style="padding-bottom: 10px;color:#ffffff">
+
+
+                        <p>To generate a new group, please drag the corresponding elements from the "Elements List" to the "Group Components"</p>
+
+                        <table style="margin-left: auto;margin-right: auto">
+
+                            <th><h2 style="color: white; padding-top: 20px; font-size: 20px;">Elements List</h2></th>
+                            <th><h2 style="color: white; padding-top: 20px; font-size: 20px">Group Components</h2></th>
+                            <tr>
+                                <td style="vertical-align: top">
+                                    <ul id="group-list-total" style="width: 800px" class="connectedSortable"></ul>
+                                </td>
+                                <td style="vertical-align: top">
+                                    <ul id="group-list-elements" class="connectedSortable" style="border: 1px dashed #e3d84b; padding-top: 20px;padding-bottom: 20px"></ul>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="vertical-align: top"></td>
+                                <td style="vertical-align: top">
+                                    <h2 style="color: white; padding-top: 20px; font-size: 20px;">Save Group</h2><br/>
+                                    <input id="groupanalysis-new-group" type="button" class="button" value="Save" style=" padding-top:20px; padding-bottom:20px;width: 100px">
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+
+            <div class="item-separator"></div>
+
+        <div id="groupanalysis-scheduling" class="component-content" style="padding-bottom: 25px;color:#ffffff">
+            <h2 style="color: white; padding-top: 50px; font-size: 20px">Currently Active Schedulings</h2>
+            <table id="groupanalysis-scheduling-table" class="analysisTable" style="width: 800px;"></table>
+        </div>
+
+        <div id="groupanalysis-configuration" class="component-content" style="padding-bottom: 25px;color:#ffffff">
+            <h2 style="color: white; padding-top: 50px; font-size: 20px">Group Configuration Tool</h2>
+            <p>Using SUNSHINE scheduler tool, you will be able to remotely control your grouped lamps and control units.</p>
+
+            <table class="analysisTable" style="text-align: center;width: 40%">
+
+                <tr>
+                    <td><select id="groupanalysis-control-dimming1" style="width: 90px;"/></td>
+                    <td><select id="groupanalysis-control-dimming2" style="width: 90px;"/></td>
+                    <td><select id="groupanalysis-control-dimming3" style="width: 90px;"/></td>
+                    <td><select id="groupanalysis-control-dimming4" style="width: 90px;"/></td>
+                </tr>
+
+                <tr>
+                    <td>Start<input type="hidden" id="groupanalysis-control-from1" value="12:00"></select></td>
+                    <td><select id="groupanalysis-control-from2" style="width: 90px;"></select></td>
+                    <td><select id="groupanalysis-control-from3" style="width: 90px;"></select></td>
+                    <td><select id="groupanalysis-control-from4" style="width: 90px;"></select></td>
+                </tr>
+            </table>
+
+            <table class="analysisTable" style="text-align: center;width: 40%">
+                <tr>
+                    <td>From <input type="text" id="groupanalysis-control-start-day" style="width: 80px;margin-left: 10px"/></td>
+                    <td>To <input type="text"  id="groupanalysis-control-end-day" style="width: 80px;margin-left: 10px"/></select></td>
+                    <td>Priority
+                        <select id="groupanalysis-control-priority" style="width: 100px;margin-left: 10px"/>
+                        <option value="1" selected>DEFAULT</option>
+                        <option value="2">LOWEST</option>
+                        <option value="3">LOW</option>
+                        <option value="4">HIGH</option>
+                        </select>
+                    </td>
+                </tr>
+            </table>
+
+            <table class="analysisTable" style="text-align: center;width: 30%">
+                <tr>
+                    <td>
+                        <input id="groupanalysis-control-repeat-mon" type="button" class="calendarbutton" value="Mon">
+                        <input id="groupanalysis-control-repeat-tue" type="button" class="calendarbutton" value="Tue">
+                        <input id="groupanalysis-control-repeat-wed" type="button" class="calendarbutton" value="Wed">
+                        <input id="groupanalysis-control-repeat-thu" type="button" class="calendarbutton" value="Thu">
+                        <input id="groupanalysis-control-repeat-fri" type="button" class="calendarbutton" value="Fri">
+                        <input id="groupanalysis-control-repeat-sat" type="button" class="calendarbutton" value="Sat">
+                        <input id="groupanalysis-control-repeat-sun" type="button" class="calendarbutton" value="Sun" style="margin-right: 15px">
+
+                        <input type="button" id="groupanalysis-repeat" class="button" value="Schedule">
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+    </div>
+</div>
+
+<div id="fullScreenSave" class="fullScreenGraphHidden" >
+    <div class="analysis">
+        <div class="component-content" style="margin-left: auto;margin-right: auto;margin-top: 35%;">
+            <h2 style="color: white; padding-top: 50px; font-size: 20px">Save New Group as</h2>
+            <table class="analysisTable">
+                <tr>
+                    <td style="padding-bottom: 20px; padding-right: 30px;"><input id="groupanalysis-save-as-name"/></td>
+                    <td style="padding-bottom: 20px;"><input type="button" id="groupanalysis-save-as" class="button" value="Save"></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div id="rt-header" style="width: 100%">
+<div class="rt-container">
+    <div class="rt-grid-3 rt-alpha">
+        <div class="rt-block logo-block">
+        <span class="rt-logo-container">
+            <a href="/" id="rt-logo" style="background-image: url(./img/sunshine.png);"></a>
+            <span class="logo-color"></span>            </span>
+        </div>
+
+    </div>
+    <div class="rt-grid-7">
+        <div class="rt-block menu-block">
+            <div class="rt-menubar fusionmenu">
+                <ul class="menutop level1 ">
+                    <li class="item101 active root">
+                        <a class="orphan item" href="index.html" id="a-1390553216086585">
+                <span>
+                                    Home                                        </span>
+                        </a>
+
+                    </li>
+                    <li class="item108 root">
+                        <a class="orphan item" href="http://www.sunshineproject.eu/project/about" id="a-1390553216088320">
+                <span>
+                                    About                                        </span>
+                        </a>
+
+                    </li>
+                    <li class="item208 root">
+                        <a class="orphan item" href="http://www.sunshineproject.eu/news" id="a-1390553216088968">
+                <span>
+                                    News                                        </span>
+                        </a>
+
+                    </li>
+                    <li class="item117 root">
+                        <a class="orphan item" href="login.html" id="a-1390553216091220">
+                <span>
+                                    Login                                        </span>
+                        </a>
+
+                    </li>
+                    <li class="item118 root rt-menu-offset-tablet">
+                        <a class="orphan item" href="http://www.sunshineproject.eu/contacts" id="a-139055321609245">
+                <span>
+                                    Contacts                                        </span>
+                        </a>
+
+                    </li>
+                </ul><div class="fusion-pill-l" style="display: block; left: 10px; width: 81px; top: 0px;"><div class="fusion-pill-r"></div></div>
+            </div>		<div class="clear"></div>
+        </div>
+
+    </div>
+    <div class="rt-grid-2 rt-omega">
+        <div class="rt-block">
+            <div class="rt-social-buttons">
+                <a class="social-button rt-facebook-btn" href="http://www.facebook.com/SunshineProjectEu">
+                    <span></span>
+                </a>
+                <a class="social-button rt-twitter-btn" href="https://twitter.com/sunshine_EU">
+                    <span></span>
+                </a>
+                <a class="social-button rt-google-btn" href="http://www.linkedin.com/groups/Sunshine-Project-4863590">
+                    <span></span>
+                </a>
+                <a class="social-button rt-rss-btn" href="http://www.youtube.com/user/SunshineProjectEu">
+                    <span></span>
+                </a>
+            </div>
+        </div>
+
+    </div>
+    <div class="clear"></div>
+</div>
+</div>
+
+<div id="cesiumContainer" class="fullWindow"><!--<img id="compass" class="compass" src="img/compass.png">--></div>
+<div id="loadingIndicator" class="loadingIndicator"></div>
+
+<div class="rt-container main-surround">
+<div id="rt-mainbody-surround">
+    <div id="rt-main" class="mb12">
+        <div class="rt-grid-12">
+            <div class="rt-block component-block">
+                <div id="rt-mainbody">
+                    <div class="component-content">
+                        <div class="blog-featured oct12-home">
+
+                            <div class="items-leading">
+
+                            <div class="leading-0" id="main">
+
+                                    <table>
+                                        <tr>
+                                            <td width="15%"><img src="img/1.png" class="mainIMG"> </td><td style="vertical-align: top;"><h2>Buildings Energy Assessment</h2><p>The <span style="color:#e3d84b">SUNSHINE</span> platform will allow automatic large-scale assessment of building energy behaviour based on data available from public services.</p>
+                                            <p>The information on energy performances will be used to automatically create urban-scale <span style="color:#e3d84b">ecomaps</span> to be used for planning activities and large-scale energy pre-certification purposes.</p></td>
+                                        </tr>
+                                        <tr>
+                                            <td width="15%"><img src="img/2.png" class="mainIMG"> </td><td style="vertical-align: top;"><h2>Energy Consumption Optimisation</h2><p>The building energy assessment will be used, together with localised weather forecasts available through interoperable web-services, to ensure <span style="color:#e3d84b">optimisation</span> of energy consumption of heating/cooling systems.</p>
+                                            <p>Through automatic alerts that will be sent to the <span style="color:#e3d84b">SUNSHINE App</span> the final users will be updated about the heating/cooling systems performances.</p></td>
+                                        </tr>
+                                        <tr>
+                                            <td width="15%"><img src="img/3.png" class="mainIMG"> </td><td style="vertical-align: top"><h2>Public Illumination Systems</h2><p><span style="color:#e3d84b">SUNSHINE</span> will ensure interoperable control of public illumination systems based on <span style="color:#e3d84b">Automatic MeterReading</span> (AMR) facilities remotely accessible, via interoperable standards, from a web-based client as well as from an App for smartphones or tablets.</p>
+                                            <p>This smart service will yield an optimisation of power consumption through <span style="color:#e3d84b">remote control</span> of public illumination levels.</p></td>
+                                        </tr>
+                                    </table>
+
+
+                                <div class="item-separator"></div>
+                            </div>
+
+
+
+                                <div class="leading-0" id="kmlbuildingdetail" style="display: none">
+
+                                    <div style="float:left;width: 40%">
+                                            <div id="kml-chart-container" class="rt-image" style="width: 400px;">
+                                                <h5 align="center">Energy Consumption History</h5>
+                                                <canvas id="kml-chart" height="400" width="400" style="margin-top: -40px"></canvas>
+                                                <div style="position:absolute;color:#565451;text-align: center;margin-top: 105px;width: inherit">
+                                                <span id="kml-chart-avg" style="font-size: 70px;padding-bottom: 15px">N/A</span>
+                                                <div style="font-size: 15px;">AVG KWh/m2</div>
+                                                </div>
+                                            </div>
+                                            <div style="padding-left: 40px">
+                                                <p>Energy performance data with <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank"> <img src="img/ccby.png" style="height: 30px; vertical-align: middle"/></a> licence.</p><p>Download
+                                                <input type="button" class="button" id="kml-download-button" value="Shapefile" style="width: 80px;"> or
+                                                <input type="button" class="button" id="json-download-button" value="Json" style="width: 80px;"></p>
+                                            </div>
+                                    </div>
+
+                                    <h2 id="kml-city-name">City Overview</h2>
+
+                                    <table style="margin-bottom: 30px">
+                                        <tr>
+                                            <td>
+                                                <div class = "kmlSummaryTable" id="kml-total-label" style="background-color: #e3d84b">
+                                                    <div id="kml-total" style="text-align: center;padding-top: 10px;font-size: 30px; color: white">N/A</div>
+                                                    <div style="font-size: 11px; text-align: center; color: white;">Total Buildings</div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class = "kmlSummaryTable" id="kml-no-data-label" style="background-color: lightgray">
+                                                    <div id="kml-no-data" style="text-align: center;padding-top: 10px;font-size: 30px; color: white">N/A</div>
+                                                    <div style="font-size: 11px; text-align: center; color: white; ">No Data</div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class = "kmlSummaryTable" id="kml-not-valid-label" style="background-color: rgba(192,192,192,0.5)">
+                                                    <div id="kml-not-valid" style="text-align: center;padding-top: 10px;font-size: 30px; color: white">N/A</div>
+                                                    <div style="font-size: 11px; text-align: center; color: white; ">Not Valid</div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class = "kmlSummaryTable" id="kml-range0-label">
+                                                    <div id="kml-range0" style="text-align: center;padding-top: 10px;font-size: 30px; color: white">N/A</div>
+                                                    <div style="font-size: 11px; text-align: center; color: white;">0&lt; EPGL &lt;30</div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class = "kmlSummaryTable" id="kml-range1-label">
+                                                    <div id="kml-range1" style="text-align: center;padding-top: 10px;font-size: 30px; color: white">N/A</div>
+                                                    <div style="font-size: 11px; text-align: center; color: white; ">31&lt; EPGL &lt;60</div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <div class = "kmlSummaryTable" id="kml-range2-label">
+                                                    <div id="kml-range2" style="text-align: center;padding-top: 10px;font-size: 30px; color: white">N/A</div>
+                                                    <div style="font-size: 11px; text-align: center; color: white; ">61&lt; EPGL &lt;120</div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class = "kmlSummaryTable" id="kml-range3-label">
+                                                    <div id="kml-range3" style="text-align: center;padding-top: 10px;font-size: 30px; color: white">N/A</div>
+                                                    <div style="font-size: 11px; text-align: center; color: white;">121&lt; EPGL &lt;180</div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class = "kmlSummaryTable" id="kml-range4-label">
+                                                    <div id="kml-range4" style="text-align: center;padding-top: 10px;font-size: 30px; color: white">N/A</div>
+                                                    <div style="font-size: 11px; text-align: center; color: white; ">181&lt; EPGL &lt;220</div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class = "kmlSummaryTable" id="kml-range5-label">
+                                                    <div id="kml-range5" style="text-align: center;padding-top: 10px;font-size: 30px; color: white">N/A</div>
+                                                    <div style="font-size: 11px; text-align: center; color: white;">221&lt; EPGL &lt;270</div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class = "kmlSummaryTable" id="kml-range6-label">
+                                                    <div id="kml-range6" style="text-align: center;padding-top: 10px;font-size: 30px; color: white">N/A</div>
+                                                    <div style="font-size: 11px; text-align: center; color: white;"> EPGL &gt;270</div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </table>
+
+                                    <table style="margin-bottom: 90px">
+                                        <tr>
+                                            <td>
+                                                <div class = "kmlSummaryTableBIG">
+                                                    <div id="kml-total-consumption" style="text-align: center;padding-top: 55px;padding-bottom: 30px;font-size: 70px; color: white">N/A</div>
+                                                    <div style="font-size: 20px; text-align: center; color: white ">Total GWh Year</div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class = "kmlSummaryTableBIG">
+                                                    <div id="kml-total-co2" style="text-align: center;padding-top: 55px;padding-bottom: 30px;font-size: 70px; color: white">N/A</div>
+                                                    <div style="font-size: 20px; text-align: center; color: white ">Ton CO2 Year</div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </table>
+
+
+                                    <div id="kml-chart-isto-container" class="rt-image">
+                                        <h5 style="text-align: center">Average Consumption by Age Range</h5>
+                                        <canvas id="kml-chart-isto"></canvas>
+                                    </div>
+
+
+
+                                    <div class="item-separator"></div>
+
+
+                                </div>
+
+                                <div class="leading-0" id="gltfbuildingdetail" style="display: none">
+
+                                    <div style="float:left;width: 40%">
+                                            <div id="building-chart-container" class="rt-image" style="width: 400px;">
+                                                <div id="loadingIndicator4BUILDINGstats" class="loadingIndicator4stats"></div>
+                                                <h5 align="center">Consumption Summary</h5>
+                                                <canvas id="building-chart" height="400" width="400" style="margin-top: -40px"></canvas>
+                                            </div>
+                                    </div>
+
+                                    <h2 id="buildings-pilot-name">Buildings Overview</h2>
+
+                                    <table style="width: 30%">
+                                        <tr>
+                                            <td>Feature of Interest</td>
+                                            <td>
+                                                <select id="building-dump-element" style="width: 200px; margin-right: 10px"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Start Date</td>
+                                            <td>
+                                                <input type="text" id="building-dump-start-day" style="width: 185px; margin-right: 10px"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>End Date</td>
+                                            <td>
+                                                <input type="text" id="building-dump-end-day" style="width: 185px; margin-right: 10px"/>
+                                            </td>
+                                        </tr>
+
+                                        <th colspan="3"><input type="button" class="button" id="building-dump" value="Download Report" style="width: 200px"><span id="building-dump-status" style="display: none">Download in progress...this may require some time.</span></th>
+                                    </table>
+
+                                    <div class="rt-image" id="shelter-status-table">
+                                        <h5 style="text-align: center;padding-top: 130px;padding-bottom: 15px">Today Shelter's Heating and Cooling Peaks Status</h5>
+                                        <table style="width: 100%">
+                                            <tr>
+                                                <td style="vertical-align: top">
+                                                    <div>
+                                                        <ul id="shelter-list" style="font-weight: bold;list-style-type: none;"></ul>
+                                                    </div>
+                                                </td>
+                                                <td style="vertical-align: top">
+                                                    <div>
+                                                        <ul id="shelter-list2" style="font-weight: bold;list-style-type: none;"></ul>
+                                                    </div>
+                                                </td>
+                                                <td style="vertical-align: top">
+                                                    <div>
+                                                        <ul id="shelter-list3" style="font-weight: bold;list-style-type: none;"></ul>
+                                                    </div>
+                                                </td>
+                                                <td style="vertical-align: top">
+                                                    <div>
+                                                        <ul id="shelter-list4" style="font-weight: bold;list-style-type: none;"></ul>
+                                                    </div>
+                                                </td>
+                                                <td style="vertical-align: top">
+                                                    <div>
+                                                        <ul id="shelter-list5" style="font-weight: bold;list-style-type: none;"></ul>
+                                                    </div>
+                                                </td>
+                                                <td style="vertical-align: top">
+                                                    <div>
+                                                        <ul id="shelter-list6" style="font-weight: bold;list-style-type: none;"></ul>
+                                                    </div>
+                                                </td>
+                                                <td style="vertical-align: top">
+                                                    <div>
+                                                        <ul id="shelter-list7" style="font-weight: bold;list-style-type: none;"></ul>
+                                                    </div>
+                                                </td>
+                                                <td style="vertical-align: top">
+                                                    <div>
+                                                        <ul id="shelter-list8" style="font-weight: bold;list-style-type: none;"></ul>
+                                                    </div>
+                                                </td>
+                                                <td style="vertical-align: top">
+                                                    <div>
+                                                        <ul id="shelter-list9" style="font-weight: bold;list-style-type: none;"></ul>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+
+                                    <div class="item-separator"></div>
+
+
+                                </div>
+
+                                <div class="leading-0" id="gltfnetworkdetail" style="display: none">
+
+                                    <div style="float:left;width: 40%">
+                                            <div id="network-chart-container" class="rt-image" style="width: 400px;">
+                                                <h5 align="center">Network Elements Summary</h5>
+                                                <div id="loadingIndicator4SHELTERstats" class="loadingIndicator4stats"></div>
+                                                <canvas id="network-chart" height="400" width="400" style="margin-top: -40px"></canvas>
+                                                <div id="network-compare-container" align="center">
+                                                    Compare With <select id="network-compare" style="width: 120px;margin-right: 10px;margin-left: 10px"></select>
+                                                    <input type="button" class="button" id="network-compare-button" value="Compare" style="width: 100px;">
+                                                </div>
+                                            </div>
+                                    </div>
+
+                                    <h2 id="network-pilot-name">Network Overview</h2>
+
+                                    <table id="network-group-table" style="margin-bottom: 30px; width: 60%;">
+                                        <tr>
+                                            <td style="vertical-align: top">
+                                                <div>
+                                                    <ul id="network-group-list" style="font-weight: bold;list-style-type: none;"></ul>
+                                                </div>
+                                            </td>
+                                            <td style="vertical-align: top">
+                                                <div>
+                                                    <ul id="network-group-list2" style="font-weight: bold;list-style-type: none;"></ul>
+                                                </div>
+                                            </td>
+                                            <td style="vertical-align: top">
+                                                <div>
+                                                    <ul id="network-group-list3" style="font-weight: bold;list-style-type: none;"></ul>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <th colspan="3"><input type="button" class="button" id="network-new-group" value="New Group" style="width: 200px"></th>
+                                    </table>
+
+                                    <table style="width: 30%">
+                                        <tr>
+                                            <td>Feature of Interest</td>
+                                            <td>
+                                                <select id="network-dump-element" style="width: 200px; margin-right: 10px"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Start Date</td>
+                                            <td>
+                                                <input type="text" id="network-dump-start-day" style="width: 185px; margin-right: 10px"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>End Date</td>
+                                            <td>
+                                                <input type="text" id="network-dump-end-day" style="width: 185px; margin-right: 10px"/>
+                                            </td>
+                                        </tr>
+
+                                        <th colspan="3"><input type="button" class="button" id="network-dump" value="Download Report" style="width: 200px"><span id="network-dump-status" style="display: none">Download in progress...this may require some time.</span></th>
+                                    </table>
+
+                                    <div id="network-lamps-status-table" class="rt-image">
+                                        <h5 style="text-align: center;padding-top: 100px;padding-bottom: 15px">Last-Day Lamp Status Report</h5>
+                                        <table style="width: 100%">
+                                            <tr>
+                                                <td style="vertical-align: top">
+                                                    <div>
+                                                        <ul id="network-lamps-list" style="font-weight: bold;list-style-type: none;"></ul>
+                                                    </div>
+                                                </td>
+                                                <td style="vertical-align: top">
+                                                    <div>
+                                                        <ul id="network-lamps-list2" style="font-weight: bold;list-style-type: none;"></ul>
+                                                    </div>
+                                                </td>
+                                                <td style="vertical-align: top">
+                                                    <div>
+                                                        <ul id="network-lamps-list3" style="font-weight: bold;list-style-type: none;"></ul>
+                                                    </div>
+                                                </td>
+                                                <td style="vertical-align: top">
+                                                    <div>
+                                                        <ul id="network-lamps-list4" style="font-weight: bold;list-style-type: none;"></ul>
+                                                    </div>
+                                                </td>
+                                                <td style="vertical-align: top">
+                                                    <div>
+                                                        <ul id="network-lamps-list5" style="font-weight: bold;list-style-type: none;"></ul>
+                                                    </div>
+                                                </td>
+                                                <td style="vertical-align: top">
+                                                    <div>
+                                                        <ul id="network-lamps-list6" style="font-weight: bold;list-style-type: none;"></ul>
+                                                    </div>
+                                                </td>
+                                                <td style="vertical-align: top">
+                                                    <div>
+                                                        <ul id="network-lamps-list7" style="font-weight: bold;list-style-type: none;"></ul>
+                                                    </div>
+                                                </td>
+                                                <td style="vertical-align: top">
+                                                    <div>
+                                                        <ul id="network-lamps-list8" style="font-weight: bold;list-style-type: none;"></ul>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </table>
+
+
+                                        </div>
+                                        <div id="network-all-configurations" class="rt-image">
+
+                                            <h5 style="text-align: center;padding-top: 50px;padding-bottom: 15px">Active Configurations</h5>
+                                            <table id="network-all-configurations-table" style="width: 100%;font-size: 12px"></table>
+                                        </div>
+                                        <div id="network-all-configurations-groups" class="rt-image">
+
+                                            <h5 style="text-align: center;padding-top: 50px;padding-bottom: 15px">Active Groups Configurations</h5>
+                                            <table id="network-all-configurations-groups-table" style="width: 100%;font-size: 12px"></table>
+                                        </div>
+
+
+                                        <div class="item-separator"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="clear"></div>
+        </div>
+    </div>
+</div>
+<footer id="rt-footer-surround">
+    <div id="rt-footer">
+        <div class="rt-container">
+            <div class="rt-grid-4 rt-alpha">
+                <div class="rt-block title1">
+                    <div class="module-surround">
+                        <div class="module-title">
+                            <h2 class="title">Project Funding</h2>
+                        </div>
+                        <div class="module-content">
+
+
+                            <div class="customtitle1">
+                                <div class="gantry-width-block">
+                                    <span style="color:#e3d84b">SUNSHINE</span>  is supported by the Competitiveness and Innovation Framework Programme (CIP) 2007 - 2013
+                                </div>
+                                <div class="gantry-width-block">
+                                    Call Identifier: CIP-ICT-PSP-2012-6
+                                </div>
+                                <div class="gantry-width-block" style="padding-top:20px">
+                                    <img src="./img/cip.png" border="0" alt="CIP" style="border: 0;height:80px;width:280px;margin-left:35px">
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="rt-grid-4">
+                <div class="rt-block title1 hidden-phone">
+                    <div class="module-surround">
+                        <div class="module-title">
+                            <h2 class="title">Project Coordinator</h2>
+                        </div>
+                        <div class="module-content">
+
+
+                            <div class="customtitle1 hidden-phone">
+                                <div class="gantry-width-10 gantry-width-block">
+                                    <span class="icon-user largemarginbottom largepaddingbottom"></span>
+                                </div>
+                                <div class="gantry-width-90 gantry-width-block">
+                                    <span style="color:#e3d84b">Raffaele de Amicis</span>
+                                </div>
+
+                                <div class="clear">&nbsp;</div>
+
+                                <div class="gantry-width-10 gantry-width-block">
+                                    <span class="icon-home largemarginbottom largepaddingbottom"></span>
+                                </div>
+                                <div class="gantry-width-90 gantry-width-block">
+                                    <span style="color:#e3d84b">Fondazione GraphiTech</span><br>
+    <span>via Alla Cascata, 56/C<br>
+      38123, Trento, Italy</span>
+                                </div>
+
+                                <div class="clear">&nbsp;</div>
+
+                                <div class="gantry-width-10 gantry-width-block">
+                                    <span class="icon-phone largemarginbottom largepaddingbottom"></span>
+                                </div>
+                                <div class="gantry-width-90 gantry-width-block">
+                                    <span style="color:#e3d84b">+39 (0461) 283395</span>
+                                </div>
+
+                                <div class="clear">&nbsp;</div>
+
+                                <div class="gantry-width-10 gantry-width-block">
+                                    <span class="icon-print largemarginbottom largepaddingbottom"></span>
+                                </div>
+                                <div class="gantry-width-90 gantry-width-block">
+                                    <span>+39 (0461) 283398</span>
+                                </div>
+
+                                <div class="clear">&nbsp;</div>
+
+                                <div class="gantry-width-10 gantry-width-block hidden-tablet">
+                                    <span class="icon-envelope-alt largemarginbottom largepaddingbottom"></span>
+                                </div>
+                                <div class="gantry-width-90 gantry-width-block hidden-tablet">
+                                    <span style="color:#e3d84b">coordinator@sunshineproject.eu</span>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="rt-grid-4 rt-omega">
+                <div class="rt-block title1 hidden-phone">
+                    <div class="module-surround">
+                        <div class="module-title">
+                            <h2 class="title">Social Networks</h2>
+                        </div>
+                        <div class="module-content">
+
+
+                            <div class="customtitle1 hidden-phone">
+                                <p style="text-align:justify">You can stay connected and updated on the <span style="color: #e3d84b;">SUNSHINE</span> project developments even through the most popular social network.</p>
+                                <table width="100%" border="0">
+                                    <tbody><tr>
+                                        <td align="center"><a href="http://www.facebook.com/SunshineProjectEu"><img src="./img/facebook.png" alt="" width="50px"></a></td>
+                                        <td align="center"><a href="https://twitter.com/sunshine_EU"><img src="./img/twitter.png" alt="" width="50px"></a></td>
+                                        <td align="center"><a href="http://www.linkedin.com/groups/Sunshine-Project-4863590"><img src="./img/linkedin.png" alt="" width="50px"></a></td>
+                                        <td align="center"><a href="http://www.youtube.com/user/SunshineProjectEu"><img src="./img/youtube.png" alt="" width="50px"></a></td>
+                                    </tr>
+                                    </tbody></table>
+
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="clear"></div>
+        </div>
+    </div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,110 @@
+@import url(Source/Widgets/widgets.css);
+@import url(Source/Widgets/lighter.css);
+
+html {
+    height: 100%;
+}
+
+body {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    overflow: auto;
+    padding: 0;
+    /*background: #000;*/
+    background-image: url(./img/top-bg-texture_new.png);
+    background-repeat: no-repeat;
+    /*background-position: 0 590px;*/
+}
+
+.fullWindow {
+    /*position: absolute;*/
+    left: 0;
+    height: 550px;
+    width: 1200px;
+    margin: 0;
+    overflow: hidden;
+    padding: 0;
+    font-family: sans-serif;
+    margin-left:auto;
+    margin-right:auto;
+}
+
+.fullScreen {
+    left: 0;
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    overflow: hidden;
+    padding: 0;
+    font-family: sans-serif;
+}
+
+.loadingIndicator {
+    display: block;
+    position: absolute;
+    top: 350px;
+    left: 50%;
+    margin-top: -33px;
+    margin-left: -33px;
+    width: 66px;
+    height: 66px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-image: url(img/loader.gif);
+    border-radius: 40px;
+}
+
+.loadingIndicator4stats {
+    display: block;
+    position: absolute;
+    top: 200px;
+    left: 18%;
+    margin-top: -33px;
+    margin-left: -33px;
+    width: 66px;
+    height: 66px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-image: url(img/loader.gif);
+    border-radius: 40px;
+}
+
+.mainIMG{
+    width: 150px;
+    height: 150px;
+    border: 1px solid #e3d84b;
+    border-radius:5px;
+    margin-bottom: 5px;
+    margin-right: 5px;
+}
+
+/*
+@media only screen and (min-width: 960px) and (max-width: 1199px) {
+    .fullWindow {
+        left: 0;
+        height: 70%;
+        width: 960px;
+        margin: 0;
+        overflow: hidden;
+        padding: 0;
+        font-family: sans-serif;
+        margin-left:auto;
+        margin-right:auto;
+    }
+
+    .loadingIndicator {
+        display: block;
+        position: absolute;
+        top: 250px;
+        left: 50%;
+        margin-top: -33px;
+        margin-left: -33px;
+        width: 66px;
+        height: 66px;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-image: url(img/loader.gif);
+    }
+}
+*/

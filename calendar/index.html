@@ -1,0 +1,80 @@
+<html>
+<head>
+    <title></title>
+
+    <script src="../jquery/jquery-1.9.1.js"></script>
+<!-- bxSlider Javascript file -->
+<script src="./jquery.bxslider.min.js"></script>
+<!-- bxSlider CSS file -->
+<link href="./jquery.bxslider.css" rel="stylesheet" />
+    
+    
+</head>
+<body>
+
+<script>
+$(document).ready(function(){
+
+    var month=new Array();
+    month[0]="Jan";
+    month[1]="Feb";
+    month[2]="Mar";
+    month[3]="Apr";
+    month[4]="May";
+    month[5]="Jun";
+    month[6]="Jul";
+    month[7]="Aug";
+    month[8]="Sep";
+    month[9]="Oct";
+    month[10]="Nov";
+    month[11]="Dec";
+
+
+    var now = new Date(Date.now());
+    var previous = new Date(Date.now());
+    previous.setFullYear(previous.getFullYear()-1);
+
+    var slide = 0;
+    var last_slide = "ciao";
+
+      for (var d = previous; d <= now; d.setDate(d.getDate() + 1)) {
+        var day = new Date(d);
+
+        var element = $('<div/>',{
+            id: "calendar-element-" + slide,
+            class: 'not_selected_date',
+            text: day.getDate(),
+            click: function(){document.getElementById(last_slide).className = "not_selected_date"; this.className = "selected_date"; last_slide = this.id;}
+        }).appendTo('#calendar-container');
+
+        var test = $('<div/>',{
+            class: 'selected_month',
+            text: month[day.getMonth()] + " " + day.getFullYear()
+        }).appendTo(element);
+
+          slide++;
+
+    }
+
+    last_slide = document.getElementById("calendar-element-" + (slide-1)).id;
+
+
+    $('#calendar-container').bxSlider({
+        minSlides: 1,
+        maxSlides: 19,
+        slideWidth: 65,
+        slideMargin: 5,
+        startSlide:parseInt(slide/19)-1,
+        infiniteLoop: false
+    });
+});
+
+
+</script>
+
+<div id="calendar-container"/>
+
+
+
+</body>
+</html>
