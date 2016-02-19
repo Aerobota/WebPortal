@@ -874,9 +874,11 @@ window.Scenario2 = function(){
 
         if(role == "globalreader" || role == "reader"){
             document.getElementById("building-configuration").style.display = "none";
+            document.getElementById("building-scheduling").style.display = "none";
         }
         else if(role == "administrator" || role == "manager"){
             document.getElementById("building-configuration").style.display = "block";
+            document.getElementById("building-scheduling").style.display = "block";
         }
 
         if(defined(buildingUsrID))document.getElementById("building-usrid").textContent = "- " + buildingUsrID.toUpperCase();
