@@ -2536,31 +2536,33 @@ window.Scenario3 = function(){
 
         var row = table.insertRow(0);
 
-        var del = row.insertCell(0);
-        del.innerHTML = "";
-
-        var startdate = row.insertCell(1);
-        startdate.innerHTML = "START";
-
-        var enddate = row.insertCell(2);
-        enddate.innerHTML = "END";
-
-        var exectime = row.insertCell(3);
-        exectime.innerHTML = "EXECUTION TIME";
-
-        var dimming = row.insertCell(4);
-        dimming.innerHTML = "POWER %";
-
-        var priority = row.insertCell(5);
-        priority.innerHTML = "PRIORITY";
-
-        var daysOfWeek = row.insertCell(6);
-        daysOfWeek.innerHTML = "REPETITION";
+        var index = 0;
 
         if(defined(history.length)){
+            var del = row.insertCell(0);
+            del.innerHTML = "";
+
+            var startdate = row.insertCell(1);
+            startdate.innerHTML = "START";
+
+            var enddate = row.insertCell(2);
+            enddate.innerHTML = "END";
+
+            var exectime = row.insertCell(3);
+            exectime.innerHTML = "EXECUTION TIME";
+
+            var dimming = row.insertCell(4);
+            dimming.innerHTML = "POWER %";
+
+            var priority = row.insertCell(5);
+            priority.innerHTML = "PRIORITY";
+
+            var daysOfWeek = row.insertCell(6);
+            daysOfWeek.innerHTML = "REPETITION";
+
             done("task found: " + history.length + " configurations");
             console.log(history);
-            var index = 0;
+
             for(var i=0;i<history.length;i++){
                 var scheduling = history[i];
 
@@ -2643,8 +2645,30 @@ window.Scenario3 = function(){
             }
         }
         else{
+            var del = row.insertCell(0);
+            del.innerHTML = "";
+
+            var startdate = row.insertCell(1);
+            startdate.innerHTML = "START";
+
+            var enddate = row.insertCell(2);
+            enddate.innerHTML = "END";
+
+            var exectime = row.insertCell(3);
+            exectime.innerHTML = "EXECUTION TIME";
+
+            var dimming = row.insertCell(4);
+            dimming.innerHTML = "POWER %";
+
+            var priority = row.insertCell(5);
+            priority.innerHTML = "PRIORITY";
+
+            var daysOfWeek = row.insertCell(6);
+            daysOfWeek.innerHTML = "REPETITION";
+
             done("task found: 1 configuration");
             var scheduling = history;
+            console.log(history);
 
             if(scheduling.next_fire != "EXPIRED"){
                 var row = table.insertRow(1);
@@ -2719,7 +2743,14 @@ window.Scenario3 = function(){
                     }
                     daysOfWeek.innerHTML = calendar.substring(0,calendar.length-2);
                 }
+                index++;
             }
+        }
+
+        if(index==0){
+            var cell1 = row.insertCell(0);
+            cell1.style.textAlign = "center";
+            cell1.innerHTML = "No active schedulings available for this device";
         }
     }
 
