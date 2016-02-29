@@ -233,23 +233,23 @@ window.Scenario3 = function(){
         switch (data.cmd) {
             case 'Scenario3.lampstatus':
                 if(!defined(data.error)) RenderLampSTAT_CUMULATVE(data.result);
-                else error(data.error);
+                else error("Scenario3.lampstatus: " + data.error);
                 break;
             case 'Scenario3.summary':
                 if(!defined(data.error)) RenderLightlineSTAT_SCHEDULING(data.result);
-                else {error(data.error); document.getElementById("network-all-configurations").style.display = "none";}
+                else {error("Scenario3.summary: " + data.error); document.getElementById("network-all-configurations").style.display = "none";}
                 break;
             case 'Scenario3.summary-groups':
                 if(!defined(data.error)) RenderGroupsSTAT_SCHEDULING(data.result);
-                else {error(data.error); document.getElementById("network-all-configurations-groups").style.display = "none";}
+                else {error("Scenario3.summary-groups: " + data.error); document.getElementById("network-all-configurations-groups").style.display = "none";}
                 break;
             case 'Scenario3.1YConsumption':
                 if(!defined(data.error)) RenderLightlineELEA_1y(data.result);
-                else error(data.error);
+                else error("Scenario3.1YConsumption: " + data.error);
                 break;
             case 'Scenario3.1YConsumptionComparison':
                 if(!defined(data.error)) RenderLightlineELEA_1yComparison(data.result);
-                else error(data.error);
+                else error("Scenario3.1YConsumptionComparison: " + data.error);
                 break;
             default:
                 break;
@@ -261,7 +261,7 @@ window.Scenario3 = function(){
         switch (data.cmd) {
             case 'Scenario3.sendSpsCommand':
                 if(!defined(data.error)) RenderSPSCommand(data.result);
-                else error(data.error);
+                else error("Scenario3.sendSpsCommand: " + data.error);
                 break;
             default:
                 break;
@@ -277,47 +277,47 @@ window.Scenario3 = function(){
                 break;
             case 'Scenario3.1YConsumptionComparison':
                 if(!defined(data.error)) RenderLightlineELE_1yComparison(data.result);
-                else error(data.error);
+                else error("Scenario3.1YConsumptionComparison: " + data.error);
                 break;
             case 'Scenario3.ELER_15':
                 if(!defined(data.error)) RenderLightlineELE_15(data.result);
-                else error(data.error);
+                else error("Scenario3.ELER_15: " + data.error);
                 break;
             case 'Scenario3.ELER_1h':
                 if(!defined(data.error)) RenderLightlineELE_1h(data.result);
-                else error(data.error);
+                else error("Scenario3.ELER_1h: " + data.error);
                 break;
             case 'Scenario3.ELER_1d':
                 if(!defined(data.error)) RenderLightlineELE_1d(data.result);
-                else {error(data.error);loadingIndicator.className="fullScreenLoaderHidden";}
+                else {error("Scenario3.ELER_1d: " + data.error);loadingIndicator.className="fullScreenLoaderHidden";}
                 break;
             case 'Scenario3.SUNS_1d':
                 if(!defined(data.error)) RenderLightlineSUNS_1d(data.result);
-                else error(data.error);
+                else error("Scenario3.SUNS_1d: " + data.error);
                 break;
             case 'Scenario3.SUNR_1d':
                 if(!defined(data.error)) RenderLightlineSUNR_1d(data.result);
-                else error(data.error);
+                else error("Scenario3.SUNR_1d: " + data.error);
                 break;
             case 'Scenario3.LIFE_1d':
                 if(!defined(data.error)) RenderLightlineLIFE_1d(data.result);
-                else error(data.error);
+                else error("Scenario3.LIFE_1d: " + data.error);
                 break;
             case 'Scenario3.NALL_1d':
                 if(!defined(data.error)) RenderLightlineNALL_1d(data.result);
-                else error(data.error);
+                else error("Scenario3.NALL_1d: " + data.error);
                 break;
             case 'Scenario3.NOK_1d':
                 if(!defined(data.error)) RenderLightlineNOK_1d(data.result);
-                else error(data.error);
+                else error("Scenario3.NOK_1d: " + data.error);
                 break;
             case 'Scenario3.ONOF_1d':
                 if(!defined(data.error)) RenderLightlineONOF_1d(data.result);
-                else error(data.error);
+                else error("Scenario3.ONOF_1d: " + data.error);
                 break;
             case 'Scenario3.ELEA_15':
                 if(!defined(data.error)) RenderLightlineELEA_15(data.result);
-                else {error(data.error);networkKWH_15 = [0];networkDate_15 = [0];
+                else {error("Scenario3.ELEA_15: " + data.error);networkKWH_15 = [0];networkDate_15 = [0];
                     if((defined(networkKWH_15)) && (defined(networkKWH_IPOW))){
                         DisplayNetworkChart();
                     }
@@ -325,7 +325,7 @@ window.Scenario3 = function(){
                 break;
             case 'Scenario3.IPOWA_15':
                 if(!defined(data.error)) RenderLightlineIPOWA_15(data.result);
-                else {error(data.error);networkKWH_IPOW = [0];networkDate_IPOW = [0];
+                else {error("Scenario3.IPOWA_15: " + data.error);networkKWH_IPOW = [0];networkDate_IPOW = [0];
                     if((defined(networkKWH_15)) && (defined(networkKWH_IPOW))){
                         DisplayNetworkChart();
                     }
@@ -333,15 +333,15 @@ window.Scenario3 = function(){
                 break;
             case 'Scenario3.ELEA_1h':
                 if(!defined(data.error)) RenderLightlineELEA_1h(data.result);
-                else error(data.error);
+                else error("Scenario3.ELEA_1h: " + data.error);
                 break;
             case 'Scenario3.ELEA_1d':
                 if(!defined(data.error)) RenderLightlineELEA_1d(data.result);
-                else {error(data.error);loadingIndicator.className="fullScreenLoaderHidden";}
+                else {error("Scenario3.ELEA_1d: " + data.error);loadingIndicator.className="fullScreenLoaderHidden";}
                 break;
             case 'Scenario3.DIMM_ir':
                 if(!defined(data.error)) RenderLampDIMM(data.result);
-                else {error(data.error);lampPERC_DIMM = [0];lampDate_DIMM = [0];
+                else {error("Scenario3.DIMM_ir: " + data.error);lampPERC_DIMM = [0];lampDate_DIMM = [0];
                     if((defined(lampWAT_IPOW)) && (defined(lampVOL_IVOL)) && (defined(lampAMP_ICUR)) && (defined(lampNUL_COSF)) && (defined(lampPERC_DIMM))){
                         DisplayLampChart();
                     }
@@ -349,7 +349,7 @@ window.Scenario3 = function(){
                 break;
             case 'Scenario3.IPOW_ir':
                 if(!defined(data.error)) RenderLampIPOW(data.result);
-                else {error(data.error);lampWAT_IPOW = [0];lampDate_IPOW = [0];
+                else {error("Scenario3.IPOW_ir: " + data.error);lampWAT_IPOW = [0];lampDate_IPOW = [0];
                     if((defined(lampWAT_IPOW)) && (defined(lampVOL_IVOL)) && (defined(lampAMP_ICUR)) && (defined(lampNUL_COSF)) && (defined(lampPERC_DIMM))){
                         DisplayLampChart();
                     }
@@ -357,7 +357,7 @@ window.Scenario3 = function(){
                 break;
             case 'Scenario3.IVOL_ir':
                 if(!defined(data.error)) RenderLampIVOL(data.result);
-                else {error(data.error);lampVOL_IVOL = [0];lampDate_IVOL = [0];
+                else {error("Scenario3.IVOL_ir: " + data.error);lampVOL_IVOL = [0];lampDate_IVOL = [0];
                     if((defined(lampWAT_IPOW)) && (defined(lampVOL_IVOL)) && (defined(lampAMP_ICUR)) && (defined(lampNUL_COSF)) && (defined(lampPERC_DIMM))){
                         DisplayLampChart();
                     }
@@ -365,7 +365,7 @@ window.Scenario3 = function(){
                 break;
             case 'Scenario3.ICUR_ir':
                 if(!defined(data.error)) RenderLampICUR(data.result);
-                else {error(data.error);lampAMP_ICUR = [0];lampDate_ICUR = [0];
+                else {error("Scenario3.ICUR_ir: " + data.error);lampAMP_ICUR = [0];lampDate_ICUR = [0];
                     if((defined(lampWAT_IPOW)) && (defined(lampVOL_IVOL)) && (defined(lampAMP_ICUR)) && (defined(lampNUL_COSF)) && (defined(lampPERC_DIMM))){
                         DisplayLampChart();
                     }
@@ -373,7 +373,7 @@ window.Scenario3 = function(){
                 break;
             case 'Scenario3.COSF_ir':
                 if(!defined(data.error)) RenderLampCOSF(data.result);
-                else {error(data.error);lampNUL_COSF = [0];lampDate_COSF = [0];
+                else {error("Scenario3.COSF_ir: " + data.error);lampNUL_COSF = [0];lampDate_COSF = [0];
                     if((defined(lampWAT_IPOW)) && (defined(lampVOL_IVOL)) && (defined(lampAMP_ICUR)) && (defined(lampNUL_COSF)) && (defined(lampPERC_DIMM))){
                         DisplayLampChart();
                     }
@@ -381,11 +381,11 @@ window.Scenario3 = function(){
                 break;
             case 'Scenario3.STAT_ir':
                 if(!defined(data.error)) RenderLampSTAT_1d(data.result);
-                else {error(data.error);}
+                else {error("Scenario3.STAT_ir: " + data.error);}
                 break;
             case 'Scenario3.LIFE_1_ir':
                 if(!defined(data.error)) RenderLampLIFE_1ir(data.result);
-                else error(data.error);
+                else error("Scenario3.LIFE_1_ir: " + data.error);
                 break;
             default:
                 break;
@@ -552,6 +552,7 @@ window.Scenario3 = function(){
                 }
 
                 var url = "./php/proxyGROUPING.php?url=" + groupElementsGroupsURL.replace("__GROUPCODE__",groupsAPICode[pilotCode]) + "&key=" + key;
+                //console.log(url);
 
                 // Send the POST request
                 xmlhttp.open('GET', url, true);
@@ -1805,12 +1806,12 @@ window.Scenario3 = function(){
         if(pilotCode == 5 || pilotCode == 9){ //BAS //VDN
             //A CLES SONO ATTIVE DI GIORNO
             if(pilotCode == 9){
-                networkDate.setHours(23,59,59);
+                networkDate.setHours(00,00,00);
             }
 
             var networkStartDate = new Date(networkDate);
-            networkStartDate.setHours(networkStartDate.getHours()-25);
             var networkEndDate = new Date(networkDate);
+            networkEndDate.setHours(networkEndDate.getHours()+25);
 
             var sosRequest = {"callback": "Scenario3.ELEA_15","what":networkSOAPCallELEA, "offering":networkCode + "_ELEA_KWH_15", "key":key, "from":adjustToTimeZone4SOS(networkStartDate).yyyy_mm_ddThh_min_sec(), "to":adjustToTimeZone4SOS(networkEndDate).yyyy_mm_ddThh_min_sec()};
             sosWorkerScenario3.postMessage({'cmd': 'askForSOS',data: sosRequest});
@@ -1830,8 +1831,9 @@ window.Scenario3 = function(){
         }
         else{ //ROV && HRV
             var networkStartDate = new Date(networkDate);
-            networkStartDate.setHours(networkStartDate.getHours()-25);
             var networkEndDate = new Date(networkDate);
+            networkEndDate.setHours(networkEndDate.getHours()+25);
+
             var sosRequest = {"callback": "Scenario3.ELER_15","what":networkSOAPCallELE, "offering":networkCode + "_ELER_KWH_15", "key":key, "from":adjustToTimeZone4SOS(networkStartDate).yyyy_mm_ddThh_min_sec(), "to":adjustToTimeZone4SOS(networkEndDate).yyyy_mm_ddThh_min_sec()};
             sosWorkerScenario3.postMessage({'cmd': 'askForSOS',data: sosRequest});
 
@@ -2128,8 +2130,9 @@ window.Scenario3 = function(){
         document.getElementById("lampanalysis-status").textContent = "NO DATA";
 
         var networkStartDate = new Date(networkDate);
-        networkStartDate.setHours(networkStartDate.getHours()-25);
         var networkEndDate = new Date(networkDate);
+        networkEndDate.setHours(networkEndDate.getHours()+25);
+
         var sosRequest = {"callback": "Scenario3.DIMM_ir","what":networkSOAPCallDIMM, "offering":networkCode + "_DIMM_PRC_ir", "key":key, "from":adjustToTimeZone4SOS(networkStartDate).yyyy_mm_ddThh_min_sec(), "to":adjustToTimeZone4SOS(networkEndDate).yyyy_mm_ddThh_min_sec()};
         sosWorkerScenario3.postMessage({'cmd': 'askForSOS',data: sosRequest});
 
@@ -2364,21 +2367,20 @@ window.Scenario3 = function(){
                                 var today = new Date();
                                 today =  today.getFullYear() + "/" + ('0' + (today.getMonth()+1)).slice(-2) + "/" + ('0' + (today.getDate())).slice(-2);
 
-                                if(defined(dimmingStart) && defined(start) && defined(end) && (end>=start) && (end!=start) && (start>=today)){
+                                if(defined(dimmingStart) && defined(start) && defined(end) && (end>start) && (end!=start) && (start>=today)){
 
                                     var arrayDimming = new Array();
                                     var arrayHours = new Array();
 
                                     var nrCommand = 0;
                                     var frequency = "N";
-                                    if(start == end) daysOfWeek == "0000000";
 
                                     if(daysOfWeek == "0000000") {
                                         frequency = "Y,24";
-                                        daysOfWeek = "N";
+                                        daysOfWeek = "1111111";
                                     }
-                                    else daysOfWeek = "Y," + daysOfWeek;
 
+                                    daysOfWeek = "Y," + daysOfWeek;
 
                                     for(var i=1;i<=4;i++){
                                         var dimming = document.getElementById(prefix + "-control-dimming" + i).value;
@@ -2645,32 +2647,32 @@ window.Scenario3 = function(){
             }
         }
         else{
-            var del = row.insertCell(0);
-            del.innerHTML = "";
-
-            var startdate = row.insertCell(1);
-            startdate.innerHTML = "START";
-
-            var enddate = row.insertCell(2);
-            enddate.innerHTML = "END";
-
-            var exectime = row.insertCell(3);
-            exectime.innerHTML = "EXECUTION TIME";
-
-            var dimming = row.insertCell(4);
-            dimming.innerHTML = "POWER %";
-
-            var priority = row.insertCell(5);
-            priority.innerHTML = "PRIORITY";
-
-            var daysOfWeek = row.insertCell(6);
-            daysOfWeek.innerHTML = "REPETITION";
-
             done("task found: 1 configuration");
             var scheduling = history;
             console.log(history);
 
             if(scheduling.next_fire != "EXPIRED"){
+                var del = row.insertCell(0);
+                del.innerHTML = "";
+
+                var startdate = row.insertCell(1);
+                startdate.innerHTML = "START";
+
+                var enddate = row.insertCell(2);
+                enddate.innerHTML = "END";
+
+                var exectime = row.insertCell(3);
+                exectime.innerHTML = "EXECUTION TIME";
+
+                var dimming = row.insertCell(4);
+                dimming.innerHTML = "POWER %";
+
+                var priority = row.insertCell(5);
+                priority.innerHTML = "PRIORITY";
+
+                var daysOfWeek = row.insertCell(6);
+                daysOfWeek.innerHTML = "REPETITION";
+
                 var row = table.insertRow(1);
 
                 var del = row.insertCell(0);
