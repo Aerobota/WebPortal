@@ -1119,7 +1119,7 @@ window.Scenario2 = function(){
         clearChart("additional-building-chart-fullscreen_1d-container", "additional-building-chart-fullscreen_1d", 1180, 260, "1d");
 
         var buildingStartDate = new Date(buildingDate);
-        buildingStartDate.setHours(buildingStartDate.getHours()-25);
+        buildingStartDate.setHours(buildingStartDate.getHours()-24);
         var buildingEndDate = new Date(buildingDate);
 
         if(defined(buildingHasThe)) {
@@ -1458,7 +1458,7 @@ window.Scenario2 = function(){
         clearChart("shelter-chart-fullscreen_curve-container", "shelter-chart-fullscreen_curve", 1180, 260, "1d");
 
         var buildingStartDate = new Date(buildingDate);
-        buildingStartDate.setHours(buildingStartDate.getHours()-25);
+        buildingStartDate.setHours(buildingStartDate.getHours()-24);
         var buildingEndDate = new Date(buildingDate);
 
         var sosRequest = {"callback": "Scenario2.Shelter.ELER_15","what":buildingSOAPCallELE, "offering":buildingCode.replace("-T","-0") + "_ELER_KWH_15", "key":key, "from":adjustToTimeZone4SOS(buildingStartDate).yyyy_mm_ddThh_min_sec(), "to":adjustToTimeZone4SOS(buildingEndDate).yyyy_mm_ddThh_min_sec()};
@@ -1608,7 +1608,7 @@ window.Scenario2 = function(){
         clearChart("weather-chart-fullscreen-container", "weather-chart-fullscreen", 1180, 260, "1h");
 
         var buildingStartDate = new Date(buildingDate);
-        buildingStartDate.setHours(buildingStartDate.getHours()-25);
+        buildingStartDate.setHours(buildingStartDate.getHours()-24);
         var buildingEndDate = new Date(buildingDate);
 
         var sosRequest = {"callback": "Scenario2.Weather.TEMP_1h","what":buildingSOAPCallTEMP, "offering":buildingCode.replace("-F","-M") + "_TEMP_CEL_1h", "key":key, "from":adjustToTimeZone4SOS(buildingStartDate).yyyy_mm_ddThh_min_sec(), "to":adjustToTimeZone4SOS(buildingEndDate).yyyy_mm_ddThh_min_sec()};
@@ -1978,7 +1978,7 @@ window.Scenario2 = function(){
         }
 
         var buildingStartDate = new Date(buildingDate);
-        buildingStartDate.setHours(buildingStartDate.getHours()-25);
+        buildingStartDate.setHours(buildingStartDate.getHours()-24);
         var buildingEndDate = new Date(buildingDate);
 
         buildingStartDate = adjustToTimeZone4SOS(buildingStartDate);
@@ -2118,7 +2118,7 @@ window.Scenario2 = function(){
         }
 
         var buildingStartDate = new Date(buildingDate);
-        buildingStartDate.setHours(buildingStartDate.getHours()-25);
+        buildingStartDate.setHours(buildingStartDate.getHours()-24);
         var buildingEndDate = new Date(buildingDate);
 
         buildingStartDate = adjustToTimeZone4SOS(buildingStartDate);
@@ -2852,7 +2852,7 @@ window.Scenario2 = function(){
         }
 
         var buildingStartDate = new Date(buildingDate);
-        buildingStartDate.setHours(buildingStartDate.getHours()-25);
+        buildingStartDate.setHours(buildingStartDate.getHours()-24);
         var buildingEndDate = new Date(buildingDate);
 
         buildingStartDate = adjustToTimeZone4SOS(buildingStartDate);

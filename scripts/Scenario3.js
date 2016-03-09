@@ -690,7 +690,7 @@ window.Scenario3 = function(){
                         if(pilotCode == 2){ //ROV
 
                             var networkStartDate = new Date();
-                            networkStartDate.setHours(networkStartDate.getHours()-25);
+                            networkStartDate.setHours(networkStartDate.getHours()-24);
                             var networkEndDate = new Date();
 
                             var lightlineData = {"callback": "Scenario3.lampstatus","what":"LAMPS", "codespaceid":pilotCode, "lightline": groupIdentifier.substring(0,5), "key":key, "from":adjustToTimeZone4SOS(networkStartDate).yyyy_mm_ddThh_min_sec(), "to":adjustToTimeZone4SOS(networkEndDate).yyyy_mm_ddThh_min_sec()};
@@ -1048,7 +1048,7 @@ window.Scenario3 = function(){
         }
 
         var from = new Date();
-        from.setHours(15,00,00);
+        from.setHours(16,15,00);
         var to = new Date(from);
         to.setHours(23,59,59);
 
@@ -1292,7 +1292,7 @@ window.Scenario3 = function(){
         }
 
         var from = new Date();
-        from.setHours(15,00,00);
+        from.setHours(16,15,00);
         var to = new Date(from);
         to.setHours(23,59,59);
 
@@ -1666,7 +1666,7 @@ window.Scenario3 = function(){
         }
 
         var from = new Date();
-        from.setHours(15,00,00);
+        from.setHours(16,15,00);
         var to = new Date(from);
         to.setHours(23,59,59);
 
@@ -1811,7 +1811,7 @@ window.Scenario3 = function(){
 
             var networkStartDate = new Date(networkDate);
             var networkEndDate = new Date(networkDate);
-            networkEndDate.setHours(networkEndDate.getHours()+25);
+            networkEndDate.setHours(networkEndDate.getHours()+24);
 
             var sosRequest = {"callback": "Scenario3.ELEA_15","what":networkSOAPCallELEA, "offering":networkCode + "_ELEA_KWH_15", "key":key, "from":adjustToTimeZone4SOS(networkStartDate).yyyy_mm_ddThh_min_sec(), "to":adjustToTimeZone4SOS(networkEndDate).yyyy_mm_ddThh_min_sec()};
             sosWorkerScenario3.postMessage({'cmd': 'askForSOS',data: sosRequest});
@@ -1832,7 +1832,7 @@ window.Scenario3 = function(){
         else{ //ROV && HRV
             var networkStartDate = new Date(networkDate);
             var networkEndDate = new Date(networkDate);
-            networkEndDate.setHours(networkEndDate.getHours()+25);
+            networkEndDate.setHours(networkEndDate.getHours()+24);
 
             var sosRequest = {"callback": "Scenario3.ELER_15","what":networkSOAPCallELE, "offering":networkCode + "_ELER_KWH_15", "key":key, "from":adjustToTimeZone4SOS(networkStartDate).yyyy_mm_ddThh_min_sec(), "to":adjustToTimeZone4SOS(networkEndDate).yyyy_mm_ddThh_min_sec()};
             sosWorkerScenario3.postMessage({'cmd': 'askForSOS',data: sosRequest});
@@ -1978,7 +1978,7 @@ window.Scenario3 = function(){
         }
 
         var from = new Date();
-        from.setHours(15,00,00);
+        from.setHours(16,15,00);
         var to = new Date(from);
         to.setHours(23,59,59);
 
@@ -2131,7 +2131,7 @@ window.Scenario3 = function(){
 
         var networkStartDate = new Date(networkDate);
         var networkEndDate = new Date(networkDate);
-        networkEndDate.setHours(networkEndDate.getHours()+25);
+        networkEndDate.setHours(networkEndDate.getHours()+24);
 
         var sosRequest = {"callback": "Scenario3.DIMM_ir","what":networkSOAPCallDIMM, "offering":networkCode + "_DIMM_PRC_ir", "key":key, "from":adjustToTimeZone4SOS(networkStartDate).yyyy_mm_ddThh_min_sec(), "to":adjustToTimeZone4SOS(networkEndDate).yyyy_mm_ddThh_min_sec()};
         sosWorkerScenario3.postMessage({'cmd': 'askForSOS',data: sosRequest});
@@ -2160,9 +2160,8 @@ window.Scenario3 = function(){
         }
         else{ //ROV && -> HRV NON CI ARRIVO PERCHè NON HA LAMPADE
             var networkStartDate = new Date(networkDate);
-            networkStartDate.setHours(00,00,00);
             var networkEndDate = new Date(networkDate);
-            networkEndDate.setHours(23,59,59);
+            networkEndDate.setHours(networkEndDate.getHours()+24);
 
             var sosRequest = {"callback": "Scenario3.STAT_ir","what":networkSOAPCallSTAT, "offering":networkCode + "_STAT_NUL_ir", "key":key, "from":adjustToTimeZone4SOS(networkStartDate).yyyy_mm_ddThh_min_sec(), "to":adjustToTimeZone4SOS(networkEndDate).yyyy_mm_ddThh_min_sec()};
             sosWorkerScenario3.postMessage({'cmd': 'askForSOS',data: sosRequest});

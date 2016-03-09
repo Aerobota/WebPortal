@@ -32,10 +32,10 @@ function makeSPSRequest(parameters){
             var priority = parameters.priority;
             var daysOfWeek = parameters.daysOfWeek;
 
-            //if(i==0) hours = "1550";
+            if(i==0) hours = "1600";
 
-            var url =  networkSPSREPEATURL.replace("__START__",daystart.getFullYear() +"-"+ ('0' + (daystart.getMonth()+1)).slice(-2) +"-"+ ('0' + daystart.getDate()).slice(-2) + "T12:00:00+0" + parameters.startTimezone + "00");
-            url =  url.replace("__END__","Y," + dayend.getFullYear() +"-"+ ('0' + (dayend.getMonth()+1)).slice(-2) +"-"+ ('0' + dayend.getDate()).slice(-2) + "T11:00:00+0" + parameters.endTimezone + "00");
+            var url =  networkSPSREPEATURL.replace("__START__",daystart.getFullYear() +"-"+ ('0' + (daystart.getMonth()+1)).slice(-2) +"-"+ ('0' + daystart.getDate()).slice(-2) + "T15:50:00+0" + parameters.startTimezone + "00");
+            url =  url.replace("__END__","Y," + dayend.getFullYear() +"-"+ ('0' + (dayend.getMonth()+1)).slice(-2) +"-"+ ('0' + dayend.getDate()).slice(-2) + "T15:00:00+0" + parameters.endTimezone + "00");
             url =  url.replace("__DIMMING__",dimming);
             url =  url.replace("__FREQUENCY__",frequency);
             url =  url.replace("__WEEK__",daysOfWeek);
@@ -71,12 +71,12 @@ function makeSPSRequest(parameters){
             var dayend = new Date(parameters.end);
             var priority = parameters.priority;
 
-            url =  networkSPSREPEATURL.replace("__START__",dayend.getFullYear() +"-"+ ('0' + (dayend.getMonth()+1)).slice(-2) +"-"+ ('0' + dayend.getDate()).slice(-2) + "T11:00:00+0" + parameters.startTimezone + "00");
-            url =  url.replace("__END__","Y," + dayend.getFullYear() +"-"+ ('0' + (dayend.getMonth()+1)).slice(-2) +"-"+ ('0' + dayend.getDate()).slice(-2) + "T11:00:00+0" + parameters.endTimezone + "00");
+            url =  networkSPSREPEATURL.replace("__START__",dayend.getFullYear() +"-"+ ('0' + (dayend.getMonth()+1)).slice(-2) +"-"+ ('0' + dayend.getDate()).slice(-2) + "T14:50:00+0" + parameters.startTimezone + "00");
+            url =  url.replace("__END__","Y," + dayend.getFullYear() +"-"+ ('0' + (dayend.getMonth()+1)).slice(-2) +"-"+ ('0' + dayend.getDate()).slice(-2) + "T15:30:00+0" + parameters.endTimezone + "00");
             url =  url.replace("__DIMMING__",dimming);
             url =  url.replace("__FREQUENCY__","Y,24");
             url =  url.replace("__WEEK__","N");
-            url =  url.replace("__HOUR__","1100");
+            url =  url.replace("__HOUR__","1500");
             url =  url.replace("__PRIORITY__",priority);
             url = encodeURIComponent(url);
 
