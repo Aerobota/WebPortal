@@ -2591,17 +2591,17 @@ window.Scenario3 = function(){
                     /*if(pilotCode == 5 && scheduling.dimm > 0 && scheduling.dimm <= 100) scheduling.dimm = 100 - scheduling.dimm;
                     else if(pilotCode == 5 && scheduling.dimm == 0) scheduling.dimm = 110;*/
 
-                    if(scheduling.dimm != 110 && exec != "11:00:00" && exec != "12:00:00"){
+                    if(scheduling.dimm != 110 && exec != "15:00:00" && exec != "16:00:00"){
                         startdate.innerHTML = start;
                         enddate.innerHTML = end;
                         exectime.style.color = "#e0d335";
                     }
-                    else if(scheduling.dimm == 110 && exec == "11:00:00"){
+                    else if(scheduling.dimm == 110 && exec == "15:00:00"){
                         startdate.innerHTML = "---";
                         enddate.innerHTML = end;
                         exectime.style.color = "#F79C9C";
                     }
-                    else if(exec == "12:00:00"){
+                    else if(exec == "16:00:00"){
                         enddate.innerHTML = end;
                         startdate.innerHTML = start;
                         exectime.style.color = "#A1D46E";
@@ -2695,17 +2695,17 @@ window.Scenario3 = function(){
                 /*if(pilotCode == 5 && scheduling.dimm > 0 && scheduling.dimm <= 100) scheduling.dimm = 100 - scheduling.dimm;
                 else if(pilotCode == 5 && scheduling.dimm == 0) scheduling.dimm = 110;*/
 
-                if(scheduling.dimm != 110 && exec != "11:00:00" && exec != "12:00:00"){
+                if(scheduling.dimm != 110 && exec != "15:00:00" && exec != "16:00:00"){
                     startdate.innerHTML = start;
                     enddate.innerHTML = end;
                     exectime.style.color = "#e0d335";
                 }
-                else if(scheduling.dimm == 110 && exec == "11:00:00"){
+                else if(scheduling.dimm == 110 && exec == "15:00:00"){
                     startdate.innerHTML = "---";
                     enddate.innerHTML = end;
                     exectime.style.color = "#F79C9C";
                 }
-                else if(exec == "12:00:00"){
+                else if(exec == "16:00:00"){
                     enddate.innerHTML = end;
                     startdate.innerHTML = start;
                     exectime.style.color = "#A1D46E";
@@ -3783,17 +3783,17 @@ window.Scenario3 = function(){
                         /*if(pilotCode == 5 && scheduling.dimm > 0 && scheduling.dimm <= 100) scheduling.dimm = 100 - scheduling.dimm;
                         else if(pilotCode == 5 && scheduling.dimm == 0) scheduling.dimm = 110;*/
 
-                        if(scheduling.dimm != 110 && exec != "11:00:00" && exec != "12:00:00"){
+                        if(scheduling.dimm != 110 && exec != "15:00:00" && exec != "16:00:00"){
                             startdate.innerHTML = start;
                             enddate.innerHTML = end;
                             exectime.style.color = "#e0d335";
                         }
-                        else if(scheduling.dimm == 110 && exec == "11:00:00"){
+                        else if(scheduling.dimm == 110 && exec == "15:00:00"){
                             startdate.innerHTML = "---";
                             enddate.innerHTML = end;
                             exectime.style.color = "#F79C9C";
                         }
-                        else if(exec == "12:00:00"){
+                        else if(exec == "16:00:00"){
                             enddate.innerHTML = end;
                             startdate.innerHTML = start;
                             exectime.style.color = "#A1D46E";
@@ -3907,17 +3907,17 @@ window.Scenario3 = function(){
                         /*if(pilotCode == 5 && scheduling.dimm > 0 && scheduling.dimm <= 100) scheduling.dimm = 100 - scheduling.dimm;
                         else if(pilotCode == 5 && scheduling.dimm == 0) scheduling.dimm = 110;*/
 
-                        if(scheduling.dimm != 110 && exec != "11:00:00" && exec != "12:00:00"){
+                        if(scheduling.dimm != 110 && exec != "15:00:00" && exec != "16:00:00"){
                             startdate.innerHTML = start;
                             enddate.innerHTML = end;
                             exectime.style.color = "#e0d335";
                         }
-                        else if(scheduling.dimm == 110 && exec == "11:00:00"){
+                        else if(scheduling.dimm == 110 && exec == "15:00:00"){
                             startdate.innerHTML = "---";
                             enddate.innerHTML = end;
                             exectime.style.color = "#F79C9C";
                         }
-                        else if(exec == "12:00:00"){
+                        else if(exec == "16:00:00"){
                             enddate.innerHTML = end;
                             startdate.innerHTML = start;
                             exectime.style.color = "#A1D46E";
