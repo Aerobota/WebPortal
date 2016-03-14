@@ -123,6 +123,9 @@ window.Scenario1 = function(){
     ecomapsWFSLayerNames["trento"] = "trento_energy";
     ecomapsWFSLayerNames["trento_cooling"] = "trento_cooling";
 
+    var cityGMLEnergy = new Array();
+    cityGMLEnergy["ferrara"] = "kml/ferrara/ferrara.zip";
+
     var total_consumption;
     var NOT_VALID;
     var NO_DATA;
@@ -171,6 +174,7 @@ window.Scenario1 = function(){
         document.getElementById("kml-city-name").textContent = cityName.replace("_cooling","").toUpperCase() + " Overview";
         document.getElementById("kml-download-button").onclick = function(){downloadSHP(ecomapLayers)};
         document.getElementById("json-download-button").onclick = function(){downloadJson(ecomapLayers)};
+        document.getElementById("gml-download-button").onclick = function(){downloadGML(cityName)};
 
         var statsFromWPS = false;
 
@@ -271,6 +275,17 @@ window.Scenario1 = function(){
         ecomapcityURL = ecomapcityURL.replace("__LAYERLIST__",layer);
 
         window.location = ecomapcityURL;
+    }
+
+    function downloadGML(cityName){
+        if(defined(cityGMLEnergy[cityName])){
+            done("Download cityGML for " + cityName);
+            window.location = cityGMLEnergy[cityName];
+        }
+        else{
+            error("Not available cityGML for" + cityName);
+            alert("CityGML not available for this pilot");
+        }
     }
 
     function downloadJson(layer){
