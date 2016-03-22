@@ -1,7 +1,7 @@
 # SUNSHINE Web Portal
 HTML5 web portal, single point of access for all the services deployed in the context of the SUNSHINE project.
 
-This repository contains a dump of the SUNSHINE web portal, available online at the following link [sunshine Web Portal](http://sunshine.graphitech-projects.com)
+This repository contains a dump of the SUNSHINE web portal, available online at the following link [SUNSHINE Web Portal](http://sunshine.graphitech-projects.com)
 
 ## Acknowledgement
 

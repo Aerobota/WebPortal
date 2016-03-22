@@ -271,7 +271,7 @@ window.Scenario1 = function(){
     function downloadSHP(layer){
         done("Download ecomap for " + layer);
 
-        var ecomapcityURL = "http://sunshine.sinergis.it/geoserver/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=graphitech:__LAYERLIST__&outputFormat=SHAPE-ZIP";
+        var ecomapcityURL = "http://sunshine.sinergis.it/geoserver/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=graphitech:__LAYERLIST__&SrsName=EPSG%3A4326&outputFormat=SHAPE-ZIP";
         ecomapcityURL = ecomapcityURL.replace("__LAYERLIST__",layer);
 
         window.location = ecomapcityURL;

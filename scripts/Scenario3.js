@@ -463,6 +463,7 @@ window.Scenario3 = function(){
 
                 xmlhttp.onreadystatechange = function () {
                     if (xmlhttp.readyState == 4) {
+                        //console.log(xmlhttp);
                         if (isValidJSONResponse(xmlhttp)) {
                             done("gruppi scaricati!");
                             var groups = JSON.parse(xmlhttp.responseText);
@@ -546,16 +547,16 @@ window.Scenario3 = function(){
                             }
                         }
                         else
-                            error("errore nel download dei gruppi");
+                            error("errore nel download dei gruppi " + url_groups);
                     }
 
                 }
 
-                var url = "./php/proxyGROUPING.php?url=" + groupElementsGroupsURL.replace("__GROUPCODE__",groupsAPICode[pilotCode]) + "&key=" + key;
-                //console.log(url);
+                var url_groups = "./php/proxyGROUPING.php?url=" + groupElementsGroupsURL.replace("__GROUPCODE__",groupsAPICode[pilotCode]) + "&key=" + key;
+                //console.log(url_groups);
 
                 // Send the POST request
-                xmlhttp.open('GET', url, true);
+                xmlhttp.open('GET', url_groups, true);
                 xmlhttp.send();
 
                 done("download control IDs");
@@ -3443,7 +3444,7 @@ window.Scenario3 = function(){
         lampDate_DIMM = new Array();
         lampPERC_DIMM = new Array();
 
-        if(sos.length>2){
+        if(sos.length>=2){
             for(var i=1;i<sos.length;i++){
                 var observation = sos[i];
                 var time = observation.split(",")[0].split("/")[0].replace("T", " ").replace("Z", "").substring(0,16);
@@ -3479,7 +3480,7 @@ window.Scenario3 = function(){
         lampDate_IPOW = new Array();
         lampWAT_IPOW = new Array();
 
-        if(sos.length>2){
+        if(sos.length>=2){
 
             for(var i=1;i<sos.length;i++){
                 var observation = sos[i];
@@ -3975,7 +3976,7 @@ window.Scenario3 = function(){
 
         var labels;
         var maxElement = Math.max((lampDate_IPOW.length),(lampDate_IVOL.length),(lampDate_ICUR.length),(lampDate_COSF.length),(lampDate_DIMM.length));
-        if(maxElement>1){
+        if(maxElement>0){
             if(lampDate_IPOW.length == maxElement) labels = lampDate_IPOW;
             else if(lampDate_IVOL.length == maxElement) labels = lampDate_IVOL;
             else if(lampDate_ICUR.length == maxElement) labels = lampDate_ICUR;
@@ -3997,7 +3998,7 @@ window.Scenario3 = function(){
             }
             else{
                 error("Grafico double Y LAMPADE con dati tutti a 0");
-                clearChart("lamp-chart-fullscreen-container", "lamp-chart-fullscreen", 1180, 360, null);
+                clearChart("lamp-chart-fullscreen-container", "lamp-chart-fullscreen", 1180, 360, "irr");
             }
         }
         else clearChart("lamp-chart-fullscreen-container", "lamp-chart-fullscreen", 1180, 360, "irr");
