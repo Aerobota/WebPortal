@@ -37,7 +37,7 @@ define([
         ScreenSpaceEventType,
         ColorGeometryInstanceAttribute,
         Color,
-        Math
+        Mathf
         ) {
     "use strict";
     /*global console*/
@@ -76,6 +76,8 @@ define([
     }else{
         supported = true;
     }
+
+    console.log("BROWSER SUPPORTED: " + supported);
 
     if(!supported){
         var browserNotSupported = document.getElementById('browserNotSupported');
@@ -279,11 +281,11 @@ define([
 
     function setCompass() {
         $("#compass").css({
-            '-webkit-transform': 'rotate(' + Math.toDegrees(-scene.camera.heading) + 'deg)',  //Safari 3.1+, Chrome
-            '-moz-transform': 'rotate(' + Math.toDegrees(-scene.camera.heading) + 'deg)',     //Firefox 3.5-15
-            '-ms-transform': 'rotate(' + Math.toDegrees(-scene.camera.heading) + 'deg)',      //IE9+
-            '-o-transform': 'rotate(' + Math.toDegrees(-scene.camera.heading) + 'deg)',       //Opera 10.5-12.00
-            'transform': 'rotate(' + Math.toDegrees(-scene.camera.heading) + 'deg)'
+            '-webkit-transform': 'rotate(' + Mathf.toDegrees(-scene.camera.heading) + 'deg)',  //Safari 3.1+, Chrome
+            '-moz-transform': 'rotate(' + Mathf.toDegrees(-scene.camera.heading) + 'deg)',     //Firefox 3.5-15
+            '-ms-transform': 'rotate(' + Mathf.toDegrees(-scene.camera.heading) + 'deg)',      //IE9+
+            '-o-transform': 'rotate(' + Mathf.toDegrees(-scene.camera.heading) + 'deg)',       //Opera 10.5-12.00
+            'transform': 'rotate(' + Mathf.toDegrees(-scene.camera.heading) + 'deg)'
         });
     }
 
